@@ -3,19 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ôn Tập Giữa Kì Lịch Sử 12</title>
+  <title>Ôn Tập Giữa Kì Lịch Sử 12 — Bản Chuẩn Hóa & Ưu Tiên Câu Sai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
-
     :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
+      --bg-base: #070b14;
+      --bg-radial: radial-gradient(circle at 18% 0%, rgba(59, 130, 246, 0.14) 0%, transparent 48%),
+                   radial-gradient(circle at 85% 12%, rgba(99, 102, 241, 0.12) 0%, transparent 45%);
+      --glass-surface: rgba(15, 23, 42, 0.72);
+      --glass-elevated: rgba(30, 41, 59, 0.62);
+      --glass-subtle: rgba(15, 23, 42, 0.52);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.18);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
       --primary: #3b82f6;
-      --correct: #22c55e;
-      --wrong: #ef4444;
-      --border: #334155;
+      --primary-hover: #2563eb;
+      --primary-glow: rgba(59, 130, 246, 0.32);
+      --accent-indigo: #6366f1;
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --success-border: rgba(16, 185, 129, 0.35);
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.12);
+      --danger-border: rgba(239, 68, 68, 0.35);
+      --warning: #f59e0b;
+      --warning-bg: rgba(245, 158, 11, 0.12);
+      --warning-border: rgba(245, 158, 11, 0.32);
     }
 
     * {
@@ -25,378 +42,1057 @@
     }
 
     body {
-      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-base);
+      background-image: var(--bg-radial);
+      background-attachment: fixed;
+      color: var(--text-primary);
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
-      max-width: 720px;
+      max-width: 820px;
       margin: 0 auto;
-      padding: 20px 16px 60px;
+      padding: 24px 16px 72px;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 28px;
-      padding-top: 12px;
-    }
-
-    header h1 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      background: linear-gradient(135deg, #60a5fa, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    header p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .progress-wrap {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      border: 1px solid var(--border);
-    }
-
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-      color: var(--muted);
-    }
-
-    .progress-bar {
-      height: 10px;
-      background: #334155;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-      border-radius: 99px;
-      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 0%;
-    }
-
-    .stats {
-      display: flex;
-      gap: 12px;
-      margin-top: 12px;
-      font-size: 0.85rem;
-    }
-
-    .stat {
-      background: #0f172a;
-      padding: 6px 12px;
-      border-radius: 8px;
-      color: var(--muted);
-    }
-
-    .stat strong {
-      color: var(--text);
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 20px;
-      padding: 28px 24px;
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-    }
-
-    .card.correct-flash {
-      border-color: var(--correct);
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
-    }
-
-    .card.wrong-flash {
-      border-color: var(--wrong);
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
-      animation: shake 0.45s ease;
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-8px); }
-      40% { transform: translateX(8px); }
-      60% { transform: translateX(-6px); }
-      80% { transform: translateX(6px); }
-    }
-
-    .question-number {
-      display: inline-block;
-      background: linear-gradient(135deg, #3b82f6, #6366f1);
-      color: white;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 99px;
-      margin-bottom: 14px;
-    }
-
-    .question-text {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 22px;
-      line-height: 1.55;
-    }
-
-    .options {
+    /* HEADER */
+    .app-header {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
+      margin-bottom: 22px;
     }
 
-    .option {
-      background: #0f172a;
-      border: 2px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 18px;
-      cursor: pointer;
-      transition: all 0.2s ease;
+    .header-top {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
       gap: 12px;
-      font-size: 0.98rem;
-      text-align: left;
     }
 
-    .option:hover:not(.disabled) {
-      border-color: #64748b;
-      background: #1e293b;
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .option .letter {
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      background: #334155;
-      border-radius: 8px;
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));
+      border: 1px solid rgba(99, 102, 241, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 600;
-      font-size: 0.9rem;
+      color: #60a5fa;
+      flex-shrink: 0;
     }
 
-    .option.correct {
-      border-color: var(--correct);
-      background: rgba(34, 197, 94, 0.12);
+    .brand-title h1 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
     }
 
-    .option.correct .letter {
-      background: var(--correct);
-      color: white;
+    .brand-title p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
     }
 
-    .option.wrong {
-      border-color: var(--wrong);
-      background: rgba(239, 68, 68, 0.12);
-    }
-
-    .option.wrong .letter {
-      background: var(--wrong);
-      color: white;
-    }
-
-    .option.disabled {
-      pointer-events: none;
-      opacity: 0.7;
-    }
-
-    .feedback {
-      margin-top: 20px;
-      padding: 14px 18px;
-      border-radius: 12px;
-      font-weight: 500;
-      display: none;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .feedback.show {
+    /* NAV TABS */
+    .nav-tabs {
       display: flex;
+      gap: 6px;
+      background: var(--glass-surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--border-glass);
+      overflow-x: auto;
     }
 
-    .feedback.correct {
-      background: rgba(34, 197, 94, 0.15);
-      color: #4ade80;
-      border: 1px solid rgba(34, 197, 94, 0.3);
+    .nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
     }
 
-    .feedback.wrong {
-      background: rgba(239, 68, 68, 0.15);
+    .nav-tab:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-tab.active {
+      background: rgba(59, 130, 246, 0.16);
+      color: #60a5fa;
+      border-color: rgba(59, 130, 246, 0.32);
+    }
+
+    .tab-badge {
+      padding: 1px 7px;
+      border-radius: 99px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    .nav-tab.active .tab-badge {
+      background: rgba(59, 130, 246, 0.28);
+      color: #93c5fd;
+    }
+
+    .tab-badge.danger {
+      background: var(--danger-bg);
       color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      border: 1px solid var(--danger-border);
     }
 
-    .start-screen, .finish-screen {
-      text-align: center;
-      padding: 40px 20px;
+    /* GLASS CARDS */
+    .glass-card {
+      background: var(--glass-surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 18px;
+      border: 1px solid var(--border-glass);
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .start-screen h2, .finish-screen h2 {
-      font-size: 1.7rem;
-      margin-bottom: 12px;
+    /* STATUS PILLS */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      border-radius: 99px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      border: 1px solid var(--border-glass);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
     }
 
-    .start-screen p, .finish-screen p {
-      color: var(--muted);
-      margin-bottom: 28px;
-      font-size: 1.05rem;
+    .status-pill.primary {
+      background: rgba(59, 130, 246, 0.14);
+      border-color: rgba(59, 130, 246, 0.32);
+      color: #93c5fd;
     }
 
+    .status-pill.danger {
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: #fca5a5;
+    }
+
+    .status-pill.warning {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      color: #fcd34d;
+    }
+
+    .status-pill.success {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: #6ee7b7;
+    }
+
+    /* BUTTONS */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: linear-gradient(135deg, #3b82f6, #6366f1);
-      color: white;
-      border: none;
-      padding: 14px 32px;
-      border-radius: 14px;
-      font-size: 1.05rem;
+      padding: 11px 22px;
+      border-radius: 11px;
+      font-family: inherit;
+      font-size: 0.92rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
-      font-family: inherit;
+      border: 1px solid transparent;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #4f46e5);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 4px 18px var(--primary-glow);
     }
 
-    .btn:active {
-      transform: translateY(0);
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.45);
     }
 
     .btn-secondary {
-      background: #334155;
-      margin-top: 12px;
+      background: rgba(30, 41, 59, 0.75);
+      color: var(--text-primary);
+      border-color: var(--border-glass);
     }
 
     .btn-secondary:hover {
-      background: #475569;
-      box-shadow: none;
+      background: rgba(51, 65, 85, 0.85);
+      border-color: var(--border-hover);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.16);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.38);
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.26);
+      color: #ffffff;
+    }
+
+    .btn-sm {
+      padding: 7px 13px;
+      font-size: 0.82rem;
+      border-radius: 9px;
+    }
+
+    /* START / CONFIG PANEL */
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+      text-align: left;
+    }
+
+    .mode-card {
+      background: var(--glass-subtle);
+      border: 1px solid var(--border-glass);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mode-card:hover {
+      border-color: var(--border-hover);
+      background: rgba(30, 41, 59, 0.55);
+    }
+
+    .mode-card.selected {
+      border-color: var(--primary);
+      background: rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25);
+    }
+
+    .mode-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .mode-card p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* PRIORITY SWITCH ROW */
+    .priority-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--border-glass);
+      border-radius: 13px;
+      padding: 13px 16px;
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .priority-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .priority-text strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+
+    .priority-text span {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--border-glass);
+      transition: 0.25s;
+      border-radius: 99px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #cbd5e1;
+      transition: 0.25s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+      background-color: #ffffff;
+    }
+
+    /* PROGRESS & STATS BAR */
+    .progress-wrap {
+      margin-bottom: 18px;
+      padding: 18px 20px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
+      border-radius: 99px;
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .stats-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* QUESTION CARD */
+    .question-card {
+      position: relative;
+    }
+
+    .question-card.correct-flash {
+      border-color: var(--success);
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25), 0 16px 40px rgba(0, 0, 0, 0.38);
+    }
+
+    .question-card.wrong-flash {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.28), 0 16px 40px rgba(0, 0, 0, 0.38);
+      animation: shake 0.42s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .q-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .q-badges {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pin-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: inherit;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-glass);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pin-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    .pin-btn.pinned {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      color: #fcd34d;
+    }
+
+    .question-text {
+      font-size: 1.14rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      line-height: 1.55;
+      color: var(--text-primary);
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--border-glass);
+      border-radius: 13px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.96rem;
+      font-family: inherit;
+      color: var(--text-primary);
+      text-align: left;
+      width: 100%;
+    }
+
+    .option-btn:hover:not(.disabled) {
+      border-color: rgba(96, 165, 250, 0.45);
+      background: rgba(30, 41, 59, 0.75);
+    }
+
+    .option-letter {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-glass);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+
+    .option-btn.correct {
+      border-color: var(--success);
+      background: var(--success-bg);
+    }
+
+    .option-btn.correct .option-letter {
+      background: var(--success);
+      border-color: var(--success);
+      color: #052e16;
+    }
+
+    .option-btn.wrong {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .option-btn.wrong .option-letter {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #ffffff;
+    }
+
+    .option-btn.disabled {
+      pointer-events: none;
+    }
+
+    /* FEEDBACK & EXPLANATION */
+    .feedback-box {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feedback-box.show {
+      display: flex;
+    }
+
+    .feedback-box.correct {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: #6ee7b7;
+    }
+
+    .feedback-box.wrong {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: #fca5a5;
+    }
+
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .feedback-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feedback-note {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      opacity: 0.92;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .reset-banner {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: #fca5a5;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .reset-banner.show {
+      display: flex;
+    }
+
+    /* MISTAKE LIST & AUDIT TABLE */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border-glass);
+      border-radius: 10px;
+      padding: 9px 14px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.88rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-btn {
+      padding: 7px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-glass);
+      background: rgba(15, 23, 42, 0.6);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .filter-btn.active {
+      background: rgba(59, 130, 246, 0.18);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+    }
+
+    .audit-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .audit-item {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-glass);
+      border-radius: 14px;
+      padding: 16px;
+      transition: border-color 0.2s ease;
+    }
+
+    .audit-item.fixed-highlight {
+      border-color: rgba(245, 158, 11, 0.35);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.05), rgba(15, 23, 42, 0.65));
+    }
+
+    .audit-item-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .audit-q {
+      font-weight: 600;
+      font-size: 0.96rem;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .audit-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+
+    .audit-opt {
+      padding: 8px 11px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-glass);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .audit-opt.is-correct {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: #6ee7b7;
+      font-weight: 600;
+    }
+
+    .audit-opt.was-wrong-key {
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: #fca5a5;
+      text-decoration: line-through;
+    }
+
+    .audit-explanation {
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 9px;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.22);
+      font-size: 0.82rem;
+      color: #bfdbfe;
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 11, 20, 0.78);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-box {
+      max-width: 420px;
+      width: 100%;
     }
 
     .hidden {
       display: none !important;
     }
 
-    .emoji {
-      font-size: 3rem;
-      margin-bottom: 16px;
-    }
-
-    .reset-msg {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #f87171;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
+    .empty-state {
       text-align: center;
-      display: none;
-    }
-
-    .reset-msg.show {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
+      padding: 36px 20px;
+      color: var(--text-secondary);
     }
 
     footer {
       text-align: center;
-      margin-top: 40px;
-      color: var(--muted);
-      font-size: 0.85rem;
+      margin-top: 36px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>Ôn Tập Giữa Kì Lịch Sử 12</h1>
-      <p>Chiến tranh lạnh • Trật tự thế giới • Liên Hợp Quốc</p>
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-top">
+        <div class="brand-group">
+          <div class="brand-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+              <path d="m9 10 2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="brand-title">
+            <h1>Ôn Tập Giữa Kì Lịch Sử 12</h1>
+            <p>Liên Hợp Quốc • Chiến tranh lạnh • Trật tự thế giới đa cực</p>
+          </div>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Điều hướng chế độ">
+          <button type="button" class="nav-tab active" id="tabQuizBtn" onclick="switchTab('quiz')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Luyện tập</span>
+          </button>
+          <button type="button" class="nav-tab" id="tabMistakesBtn" onclick="switchTab('mistakes')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Câu hay sai</span>
+            <span class="tab-badge danger" id="mistakeCountBadge">0</span>
+          </button>
+          <button type="button" class="nav-tab" id="tabAuditBtn" onclick="switchTab('audit')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="m9 15 2 2 4-4"/></svg>
+            <span>Đáp án chuẩn</span>
+            <span class="tab-badge">61</span>
+          </button>
+        </nav>
+      </div>
     </header>
 
-    <!-- START SCREEN -->
-    <div id="startScreen" class="card start-screen">
-      <div class="emoji">📚</div>
-      <h2>Sẵn sàng ôn tập chưa?</h2>
-      <p>Làm đúng liên tục tất cả câu mới được qua.<br>
-      Sai một câu là <strong style="color:#f87171">reset về đầu</strong> luôn!</p>
-      <button class="btn" onclick="startQuiz()">Bắt đầu ôn ngay</button>
-    </div>
+    <!-- ===================== TAB 1: QUIZ ===================== -->
+    <main id="tabQuizView">
+      <!-- START SCREEN -->
+      <section id="startScreen" class="glass-card" style="text-align: center;">
+        <div style="display:inline-flex; padding: 14px; border-radius: 16px; background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.28); color: #60a5fa; margin-bottom: 14px;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/>
+          </svg>
+        </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.55rem; margin-bottom:6px;">Sẵn sàng chinh phục 61 câu Lịch Sử 12</h2>
+        <p style="color:var(--text-secondary); font-size:0.92rem; max-width:540px; margin:0 auto 18px;">
+          Đã rà soát và hiệu đính toàn bộ 61 đáp án theo chuẩn SGK (sửa 3 câu lệch đáp án gốc: Câu 2, Câu 5, Câu 18) kèm thuật toán tự động đẩy các câu sai nhiều lên đầu.
+        </p>
 
-    <!-- QUIZ SCREEN -->
-    <div id="quizScreen" class="hidden">
-      <div class="progress-wrap">
-        <div class="progress-info">
-          <span>Tiến độ</span>
-          <span id="progressText">0 / 0</span>
+        <!-- MODE SELECTOR -->
+        <div class="mode-grid">
+          <div class="mode-card selected" id="modeCardStreak" onclick="selectMode('streak')">
+            <div class="mode-card-header">
+              <span>Thử thách Chuỗi 61 câu</span>
+              <span class="status-pill danger">Khắt khe</span>
+            </div>
+            <p>Sai 1 câu sẽ quay lại từ đầu. Khi bật ưu tiên, câu vừa sai và các câu sai nhiều sẽ được đẩy lên đầu lượt mới.</p>
+          </div>
+
+          <div class="mode-card" id="modeCardMistakes" onclick="selectMode('mistakes')">
+            <div class="mode-card-header">
+              <span>Luyện riêng Câu hay sai</span>
+              <span class="status-pill warning" id="modeMistakePill">0 câu</span>
+            </div>
+            <p>Chỉ lọc ra những câu bạn từng làm sai hoặc gắn sao ưu tiên, xếp theo số lần sai giảm dần để ôn tập trung.</p>
+          </div>
+
+          <div class="mode-card" id="modeCardFree" onclick="selectMode('free')">
+            <div class="mode-card-header">
+              <span>Ôn tập Tự do (Không reset)</span>
+              <span class="status-pill primary">61 câu</span>
+            </div>
+            <p>Làm lần lượt hết 61 câu không bị quay về đầu khi sai, vẫn tự động ghi nhận thống kê số lần sai từng câu.</p>
+          </div>
         </div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
+
+        <!-- PRIORITY TOGGLE -->
+        <div class="priority-bar">
+          <div class="priority-info">
+            <div style="color:#fcd34d; display:flex; align-items:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="priority-text">
+              <strong>Ưu tiên làm những câu sai nhiều trước</strong>
+              <span>Tự động xếp các câu có số lần sai cao nhất và câu gắn sao lên đầu danh sách câu hỏi</span>
+            </div>
+          </div>
+          <label class="switch" aria-label="Ưu tiên làm những câu sai nhiều">
+            <input type="checkbox" id="priorityToggleStart" checked onchange="togglePriorityMode(this.checked)">
+            <span class="slider"></span>
+          </label>
         </div>
-        <div class="stats">
-          <div class="stat">Lần làm lại: <strong id="retryCount">0</strong></div>
-          <div class="stat">Đã đúng liên tục: <strong id="streak">0</strong></div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+          <button type="button" class="btn btn-primary" onclick="startQuiz()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Bắt đầu làm bài</span>
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="switchTab('audit')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Xem 3 câu đã sửa đáp án</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ACTIVE QUIZ SCREEN -->
+      <section id="quizScreen" class="hidden">
+        <div class="glass-card progress-wrap">
+          <div class="progress-top">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span class="status-pill primary" id="activeModeLabel">Thử thách Chuỗi đúng</span>
+              <span class="status-pill warning" id="priorityActiveBadge">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>Ưu tiên câu sai: Bật</span>
+              </span>
+            </div>
+            <span style="font-size:0.88rem; font-weight:600; color:var(--text-secondary);" id="progressText">0 / 61</span>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stats-group">
+              <span class="status-pill">Lần reset: <strong id="retryCount" style="color:var(--text-primary); margin-left:4px;">0</strong></span>
+              <span class="status-pill">Chuỗi đúng: <strong id="streak" style="color:#6ee7b7; margin-left:4px;">0</strong></span>
+              <span class="status-pill">Câu từng sai: <strong id="totalMistakeQuestions" style="color:#fca5a5; margin-left:4px;">0</strong></span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="returnToMenu()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <span>Đổi chế độ</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="resetMsg" class="reset-banner">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span id="resetMsgText">Sai rồi! Đã cập nhật trọng số câu sai và xếp các câu sai nhiều lên đầu để làm lại từ câu 1.</span>
+        </div>
+
+        <div class="glass-card question-card" id="questionCard">
+          <div class="q-meta-bar">
+            <div class="q-badges">
+              <span class="status-pill primary" id="qNumber">Câu 1 / 61</span>
+              <span class="status-pill" id="qOriginalId">Mã gốc: #1</span>
+              <span class="status-pill danger hidden" id="qMistakeBadge"></span>
+              <span class="status-pill warning hidden" id="qFixedBadge">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Đã hiệu đính đáp án</span>
+              </span>
+            </div>
+
+            <button type="button" class="pin-btn" id="pinQuestionBtn" onclick="togglePinCurrentQuestion()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span id="pinQuestionText">Ưu tiên câu này</span>
+            </button>
+          </div>
+
+          <div class="question-text" id="qText"></div>
+          <div class="options-list" id="options"></div>
+
+          <div class="feedback-box" id="feedback">
+            <div class="feedback-header">
+              <div class="feedback-title" id="feedbackTitle"></div>
+              <button type="button" class="btn btn-primary btn-sm hidden" id="nextQuestionBtn" onclick="advanceNextQuestion()">
+                <span>Câu tiếp theo</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+            <div class="feedback-note" id="feedbackNote"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FINISH SCREEN -->
+      <section id="finishScreen" class="glass-card hidden" style="text-align:center; padding: 38px 24px;">
+        <div style="display:inline-flex; padding: 16px; border-radius: 18px; background: var(--success-bg); border: 1px solid var(--success-border); color: #34d399; margin-bottom: 16px;">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.65rem; margin-bottom:8px;">Hoàn thành xuất sắc!</h2>
+        <p style="color:var(--text-secondary); margin-bottom:24px;">
+          Bạn đã vượt qua toàn bộ <strong id="totalQ" style="color:var(--text-primary);">61</strong> câu hỏi trong lượt này.<br>
+          Số lần phải làm lại trong phiên: <strong id="finalRetry" style="color:#fca5a5;">0</strong>
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+          <button type="button" class="btn btn-primary" onclick="startQuiz()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Làm lại lượt mới (Ưu tiên câu sai)</span>
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="returnToMenu()">
+            <span>Về bảng chọn chế độ</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== TAB 2: MISTAKES PRIORITY VIEW ===================== -->
+    <section id="tabMistakesView" class="hidden">
+      <div class="glass-card" style="margin-bottom: 18px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+          <div>
+            <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.25rem;">Danh sách câu sai nhiều & Ưu tiên</h2>
+            <p style="font-size:0.85rem; color:var(--text-secondary);">Hệ thống tự động ghi nhớ số lần bạn chọn sai hoặc đánh dấu sao để ưu tiên đưa lên đầu bài ôn.</p>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <button type="button" class="btn btn-primary btn-sm" onclick="startMistakeDrillNow()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Luyện ngay các câu này</span>
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="openResetStatsModal()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              <span>Xóa lịch sử câu sai</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="mistakesContainer" class="audit-list"></div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 3: AUDIT & ANSWER KEY ===================== -->
+    <section id="tabAuditView" class="hidden">
+      <div class="glass-card">
+        <div style="margin-bottom:16px;">
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.25rem; margin-bottom:4px;">Bảng đối chiếu 61 câu & 3 câu đã hiệu đính đáp án</h2>
+          <p style="font-size:0.85rem; color:var(--text-secondary);">
+            Trong file gốc của bạn có 3 câu bị đặt nhầm chỉ số đáp án (<strong>Câu 2, Câu 5, Câu 18</strong>). Tất cả đã được chuẩn hóa theo đáp án chính thức chương trình Lịch sử 12 mới.
+          </p>
+        </div>
+
+        <div class="filter-bar">
+          <input type="text" class="search-input" id="auditSearchInput" placeholder="Tìm theo từ khóa câu hỏi (VD: Ianta, G20, Liên Hợp Quốc...)" oninput="renderAuditList()">
+          <div class="filter-pills">
+            <button type="button" class="filter-btn active" id="filterAllBtn" onclick="setAuditFilter('all')">Tất cả (61)</button>
+            <button type="button" class="filter-btn" id="filterFixedBtn" onclick="setAuditFilter('fixed')">3 câu sửa đáp án</button>
+            <button type="button" class="filter-btn" id="filterWrongBtn" onclick="setAuditFilter('wrong')">Câu từng làm sai</button>
+          </div>
+        </div>
+
+        <div id="auditListContainer" class="audit-list"></div>
+      </div>
+    </section>
+
+    <!-- CONFIRM RESET MODAL -->
+    <div id="resetModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+      <div class="glass-card modal-box">
+        <h3 id="resetModalTitle" style="font-family:'Space Grotesk',sans-serif; font-size:1.15rem; margin-bottom:8px;">Xóa toàn bộ thống kê câu sai?</h3>
+        <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:20px;">
+          Số lần làm sai và các câu gắn sao ưu tiên sẽ được đặt lại về 0. Bạn có chắc chắn muốn tiếp tục?
+        </p>
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeResetStatsModal()">Hủy</button>
+          <button type="button" class="btn btn-danger btn-sm" onclick="confirmResetStats()">Xác nhận xóa</button>
         </div>
       </div>
-
-      <div id="resetMsg" class="reset-msg">
-        ❌ Sai rồi! Quay về câu 1 và làm lại từ đầu nhé.
-      </div>
-
-      <div class="card" id="questionCard">
-        <div class="question-number" id="qNumber">Câu 1</div>
-        <div class="question-text" id="qText"></div>
-        <div class="options" id="options"></div>
-        <div class="feedback" id="feedback"></div>
-      </div>
-    </div>
-
-    <!-- FINISH SCREEN -->
-    <div id="finishScreen" class="card finish-screen hidden">
-      <div class="emoji">🎉</div>
-      <h2>Xuất sắc!</h2>
-      <p>Bạn đã làm đúng liên tục tất cả <strong id="totalQ">0</strong> câu.<br>
-      Số lần phải làm lại: <strong id="finalRetry">0</strong></p>
-      <button class="btn" onclick="startQuiz()">Ôn lại từ đầu</button>
-      <br>
-      <button class="btn btn-secondary" onclick="location.reload()">Về màn hình chính</button>
     </div>
 
     <footer>
-      Ôn tập hiệu quả = Nhớ lâu • Làm đến khi đúng hết
+      Ôn tập Lịch Sử 12 • Tự động ưu tiên câu sai nhiều • Chuẩn hóa 100% đáp án SGK
     </footer>
   </div>
 
   <script>
-    // ===================== DỮ LIỆU CÂU HỎI =====================
+    // ===================== DỮ LIỆU 61 CÂU HỎI ĐÃ HIỆU ĐÍNH =====================
     const questions = [
       {
+        id: 1,
         q: "Sự kiện nào sau đây diễn ra trong thời kỳ Chiến tranh lạnh (1947-1989)?",
         options: [
           "Tổ chức Hiệp ước Vácsava được thành lập",
@@ -404,9 +1100,11 @@
           "Chiến tranh thế giới thứ hai bùng nổ",
           "Chiến tranh thế giới thứ nhất kết thúc"
         ],
-        correct: 0
+        correct: 0,
+        note: "Tổ chức Hiệp ước Vácsava được thành lập tháng 5/1955, nằm trong thời kỳ Chiến tranh lạnh (1947–1989)."
       },
       {
+        id: 2,
         q: "Nhóm G20 ra đời năm 1999 với sự tham gia của 20 nước có nền kinh tế lớn là một trong những biểu hiện của",
         options: [
           "xu thế hợp tác kinh tế",
@@ -414,9 +1112,13 @@
           "xu thế đơn cực",
           "xu thế đa cực"
         ],
-        correct: 1
+        correct: 3,
+        fixed: true,
+        oldWrongIndex: 1,
+        note: "Đính chính từ file gốc: Nhóm G20 (1999) hình thành trung tâm điều phối gồm các nền kinh tế lớn và mới nổi, là biểu hiện tiêu biểu của xu thế đa cực, nhiều trung tâm trong quan hệ quốc tế sau Chiến tranh lạnh."
       },
       {
+        id: 3,
         q: "Trong những cuộc gặp gỡ cấp cao năm 1972, Liên Xô và Mỹ đã ký kết văn kiện nào?",
         options: [
           "Công ước cấm vũ khí hóa học",
@@ -424,9 +1126,11 @@
           "Hiệp ước hạn chế vũ khí chiến lược",
           "Công ước cấm vũ khí hạt nhân"
         ],
-        correct: 2
+        correct: 2,
+        note: "Tháng 5/1972, Liên Xô và Mỹ ký Hiệp ước ABM và Hiệp định tạm thời về hạn chế vũ khí tiến công chiến lược (SALT-1)."
       },
       {
+        id: 4,
         q: "Năm 1999, nhóm 20 nền kinh tế lớn nhất thế giới (G20) được thành lập, trở thành trung tâm điều phối các nỗ lực quốc tế nhằm mục đích",
         options: [
           "thúc đẩy sự phát triển kinh tế thế giới",
@@ -434,19 +1138,25 @@
           "tăng cường hợp tác an ninh, chính trị",
           "thúc đẩy hòa bình và ổn định khu vực"
         ],
-        correct: 0
+        correct: 0,
+        note: "G20 được thành lập năm 1999 nhằm điều phối các nỗ lực quốc tế thúc đẩy sự ổn định tài chính và phát triển kinh tế thế giới."
       },
       {
+        id: 5,
         q: "Mục tiêu “Duy trì hòa bình, an ninh thế giới” của tổ chức Liên Hợp Quốc là",
         options: [
           "mục tiêu mang tính sách lược",
-          "mục tiêu quan trọng hàng đầu",
+          "mục tiêu quan trọng thứ yếu",
           "cơ sở để thực hiện mục tiêu khác",
           "cơ sở để xóa bỏ xung đột, nội chiến"
         ],
-        correct: 1
+        correct: 2,
+        fixed: true,
+        oldWrongIndex: 1,
+        note: "Đính chính theo SGK Lịch sử 12: Trong số các mục tiêu của Liên Hợp Quốc, mục tiêu 'Duy trì hòa bình và an ninh quốc tế' được chú trọng hàng đầu và là cơ sở để thực hiện các mục tiêu khác (đồng thời chuẩn hóa phương án nhiễu B là 'mục tiêu quan trọng thứ yếu' theo đúng đề gốc)."
       },
       {
+        id: 6,
         q: "Nhận xét nào sau đây là đúng về trật tự thế giới đa cực?",
         options: [
           "Có sự tham gia của các quốc gia và trung tâm quyền lực",
@@ -454,9 +1164,11 @@
           "Được kế thừa những hệ quả tích cực của trật tự thế giới hai cực",
           "Một quốc gia có khả năng chi phối sự phát triển của thế giới"
         ],
-        correct: 0
+        correct: 0,
+        note: "Trật tự đa cực phản ánh sự tham gia và tương quan lực lượng giữa nhiều quốc gia, trung tâm quyền lực lớn (Mỹ, Trung Quốc, EU, Nhật Bản, Nga, Ấn Độ...)."
       },
       {
+        id: 7,
         q: "Theo quyết định của Hội nghị Ianta (2/1945), Trung Quốc",
         options: [
           "thuộc phạm vi ảnh hưởng của Mỹ, Anh",
@@ -464,9 +1176,11 @@
           "bị chia cắt làm hai miền theo vĩ tuyến 38",
           "trở thành quốc gia lệ thuộc của Liên Xô"
         ],
-        correct: 1
+        correct: 1,
+        note: "Hội nghị Ianta xác định Trung Quốc cần trở thành một quốc gia thống nhất và dân chủ."
       },
       {
+        id: 8,
         q: "Một trật tự thế giới mà ở đó các nước lớn, các trung tâm kinh tế - tài chính lớn có so sánh tương quan lực lượng cân bằng và vị thế quan trọng đối với quan hệ quốc tế được gọi là trật tự",
         options: [
           "đa phương hóa",
@@ -474,9 +1188,11 @@
           "đa cực, nhiều trung tâm",
           "đơn cực, nhất siêu"
         ],
-        correct: 2
+        correct: 2,
+        note: "Khái niệm chuẩn trong SGK Lịch sử 12 Bài 3: Trật tự thế giới đa cực, nhiều trung tâm."
       },
       {
+        id: 9,
         q: "Trong xu thế đa cực, trung tâm quyền lực nào đã vươn lên mạnh mẽ để trở thành nền kinh tế lớn thứ hai thế giới (từ năm 2010)?",
         options: [
           "Trung Quốc",
@@ -484,9 +1200,11 @@
           "Liên bang Nga",
           "Ấn Độ"
         ],
-        correct: 0
+        correct: 0,
+        note: "Năm 2010, Trung Quốc vượt qua Nhật Bản để trở thành nền kinh tế lớn thứ hai thế giới (sau Mỹ)."
       },
       {
+        id: 10,
         q: "Nội dung nào sau đây phản ánh đúng điểm tương đồng giữa trật tự thế giới mới sau Chiến tranh lạnh so với trật tự hai cực Ianta?",
         options: [
           "Tồn tại hai hệ thống kinh tế - xã hội đối lập nhau",
@@ -494,9 +1212,11 @@
           "Được hình thành khi chiến tranh thế giới kết thúc",
           "Các nước tập trung phát triển kinh tế là trọng điểm"
         ],
-        correct: 1
+        correct: 1,
+        note: "Cả hai trật tự thế giới đều chịu sự chi phối lớn từ tương quan lực lượng và vai trò của các cường quốc."
       },
       {
+        id: 11,
         q: "Trong xu thế đa cực, cách mạng khoa học công nghệ và xu thế toàn cầu hóa làm cho các quốc gia phụ thuộc lẫn nhau chủ yếu về",
         options: [
           "kinh tế",
@@ -504,9 +1224,11 @@
           "chính trị",
           "văn hóa"
         ],
-        correct: 0
+        correct: 0,
+        note: "Toàn cầu hóa và cách mạng KH-CN khiến nền kinh tế các nước gắn kết và phụ thuộc lẫn nhau chặt chẽ."
       },
       {
+        id: 12,
         q: "Theo quyết định của Hội nghị Ianta (tháng 2-1945), Mỹ không được phân chia phạm vi ảnh hưởng ở địa bàn nào sau đây?",
         options: [
           "Nhật Bản",
@@ -514,9 +1236,11 @@
           "Tây Béc-lin",
           "Bắc Triều Tiên"
         ],
-        correct: 3
+        correct: 3,
+        note: "Bắc Triều Tiên (phía Bắc vĩ tuyến 38) thuộc phạm vi ảnh hưởng của Liên Xô, Nam Triều Tiên thuộc phạm vi ảnh hưởng của Mỹ."
       },
       {
+        id: 13,
         q: "Nội dung nào không phải nguyên tắc hoạt động của tổ chức Liên Hợp Quốc?",
         options: [
           "Từ bỏ đe dọa bằng vũ lực hoặc sử dụng vũ lực trong quan hệ quốc tế",
@@ -524,9 +1248,11 @@
           "Giúp đỡ quốc gia bị Liên Hợp Quốc áp dụng hành động cưỡng chế",
           "Tôn trọng bình đẳng chủ quyền của tất cả các quốc gia thành viên"
         ],
-        correct: 2
+        correct: 2,
+        note: "Hiến chương LHQ quy định các thành viên không giúp đỡ bất kỳ quốc gia nào đang bị LHQ áp dụng hành động phòng ngừa hoặc cưỡng chế."
       },
       {
+        id: 14,
         q: "Trong bối cảnh thế giới bị phân chia thành “hai cực”, “hai phe” (1945 – 1991), nguyên tắc hoạt động nào có ý nghĩa thực tiễn nhất của Liên Hợp Quốc?",
         options: [
           "Không can thiệp vào công việc nội bộ của Liên Xô, Mỹ, Anh",
@@ -534,9 +1260,11 @@
           "Giải quyết các tranh chấp quốc tế bằng biện pháp hòa bình",
           "Giải thể các liên minh chính trị - quân sự lớn trên thế giới"
         ],
-        correct: 2
+        correct: 2,
+        note: "Nguyên tắc giải quyết các tranh chấp quốc tế bằng biện pháp hòa bình giúp kiềm chế xung đột trực tiếp dẫn tới thế chiến mới."
       },
       {
+        id: 15,
         q: "Sự kiện nào đã bước đầu tạo ra khuôn khổ của trật tự thế giới hai cực trong thế kỷ XX?",
         options: [
           "Thông điệp của Truman (3/1947)",
@@ -544,9 +1272,11 @@
           "Hội nghị Vécxai (1919)",
           "Hội nghị Potsdam (8/1945)"
         ],
-        correct: 1
+        correct: 1,
+        note: "Những quyết định của Hội nghị Ianta (2/1945) đã tạo khuôn khổ cho sự xác lập Trật tự thế giới hai cực Ianta."
       },
       {
+        id: 16,
         q: "Quyết định nào sau đây của Hội nghị Ianta (2-1945) đã buộc nhân dân Đông Nam Á phải tiếp tục nhiệm vụ đứng lên đấu tranh giành độc lập dân tộc?",
         options: [
           "Thống nhất tiêu diệt tận gốc phát xít Đức và quân phiệt Nhật",
@@ -554,9 +1284,11 @@
           "Đông Nam Á vẫn thuộc phạm vi ảnh hưởng của các nước phương Tây",
           "Lực lượng Đồng minh vào Đông Nam Á giải giáp quân Nhật"
         ],
-        correct: 2
+        correct: 2,
+        note: "Quyết định các vùng còn lại ở châu Á (trong đó có Đông Nam Á) vẫn thuộc phạm vi ảnh hưởng truyền thống của các nước phương Tây tạo điều kiện cho thực dân quay lại xâm lược."
       },
       {
+        id: 17,
         q: "Mục tiêu nào của Liên Hợp Quốc thúc đẩy các quốc gia thành viên xích lại gần nhau hơn?",
         options: [
           "Cấm đe dọa hoặc sử dụng vũ lực trong quan hệ quốc tế",
@@ -564,9 +1296,11 @@
           "Tôn trọng các nghĩa vụ quốc tế và luật pháp quốc tế",
           "Phát triển mối quan hệ hữu nghị giữa các dân tộc"
         ],
-        correct: 3
+        correct: 3,
+        note: "Phát triển mối quan hệ hữu nghị giữa các dân tộc trên cơ sở tôn trọng quyền bình đẳng và quyền tự quyết là mục tiêu gắn kết các quốc gia thành viên."
       },
       {
+        id: 18,
         q: "Sự sụp đổ của Trật tự thế giới hai cực Ianta có tác động chủ yếu nào sau đây?",
         options: [
           "Thúc đẩy sự phát triển của kinh tế thế giới gắn liền với xu thế toàn cầu hóa",
@@ -574,9 +1308,13 @@
           "Mở rộng hơn nữa phạm vi ảnh hưởng và kiểm soát của Mỹ trên thế giới",
           "Chấm dứt được những cuộc xung đột căng thẳng và kéo dài ở khu vực Trung Đông"
         ],
-        correct: 0
+        correct: 1,
+        fixed: true,
+        oldWrongIndex: 0,
+        note: "Đính chính từ file gốc: Theo SGK Lịch sử 12 Bài 2 & Bài 3, sự sụp đổ của Trật tự hai cực Ianta tạo điều kiện cho các cường quốc mới nổi (Trung Quốc, Ấn Độ...) và các trung tâm kinh tế - chính trị vươn lên có vị thế, vai trò ngày càng lớn trong quan hệ quốc tế."
       },
       {
+        id: 19,
         q: "Sự ra đời của tổ chức Liên Hợp Quốc gắn với vai trò chủ yếu của những quốc gia nào sau đây?",
         options: [
           "Đức, Ý, Nhật",
@@ -584,9 +1322,11 @@
           "Trung Quốc, Mỹ, Anh",
           "Mỹ, Anh, Liên Xô"
         ],
-        correct: 3
+        correct: 3,
+        note: "Ba cường quốc trụ cột của phe Đồng minh chống phát xít là Liên Xô, Mỹ, Anh giữ vai trò quyết định trong quá trình thành lập Liên Hợp Quốc."
       },
       {
+        id: 20,
         q: "Nội dung nào sau đây không phản ánh đúng đóng góp của Liên Hợp Quốc?",
         options: [
           "Góp phần xóa bỏ chế độ phân biệt chủng tộc ở châu Phi",
@@ -594,9 +1334,11 @@
           "Thúc đẩy mối quan hệ hữu nghị và hợp tác giữa các dân tộc",
           "Chấm dứt hoàn toàn các cuộc xung đột quân sự trên thế giới"
         ],
-        correct: 3
+        correct: 3,
+        note: "Liên Hợp Quốc góp phần ngăn ngừa thế chiến mới và giải quyết nhiều cuộc xung đột, nhưng chưa thể chấm dứt hoàn toàn mọi cuộc xung đột quân sự trên thế giới."
       },
       {
+        id: 21,
         q: "Một trong những điểm chung của các trật tự thế giới được hình thành trong và sau CTL là đều",
         options: [
           "dựa trên sự thỏa thuận giữa các nước có cùng chế độ chính trị",
@@ -604,9 +1346,11 @@
           "thiết lập trên cơ sở thực lực của các nước trên thế giới",
           "phản ánh tương quan lực lượng giữa hai hệ thống chính trị đối lập"
         ],
-        correct: 2
+        correct: 2,
+        note: "Mọi trật tự thế giới đều được xác lập dựa trên tương quan thực lực tổng hợp giữa các quốc gia."
       },
       {
+        id: 22,
         q: "Văn bản quốc tế nào sau đây không được tổ chức Liên Hợp Quốc xây dựng?",
         options: [
           "Công ước cấm vũ khí hạt nhân (2017)",
@@ -614,9 +1358,11 @@
           "Hiệp ước cấm phổ biến vũ khí hạt nhân (1968)",
           "Công ước cấm vũ khí hóa học (1992)"
         ],
-        correct: 1
+        correct: 1,
+        note: "Hiệp định hạn chế vũ khí tiến công chiến lược (SALT-1, 1972) là văn kiện song phương ký giữa Mỹ và Liên Xô, không phải do LHQ ban hành."
       },
       {
+        id: 23,
         q: "Một trong những biểu hiện của xu thế toàn cầu hóa từ những năm 80 của thế kỷ XX là",
         options: [
           "sự phát triển mạnh mẽ của xu thế khu vực hóa",
@@ -624,19 +1370,23 @@
           "sự thành công của cách mạng công nghệ 4.0",
           "sự phát triển quan hệ thương mại quốc tế"
         ],
-        correct: 3
+        correct: 3,
+        note: "Sự phát triển nhanh chóng của quan hệ thương mại quốc tế là biểu hiện đầu tiên và rõ nét nhất của xu thế toàn cầu hóa từ thập niên 1980."
       },
       {
+        id: 24,
         q: "Từ đầu những năm 70 của thế kỉ XX, quan hệ Mỹ - Liên Xô chuyển dần sang hòa dịu, sau đó kết thúc Chiến tranh lạnh (1989) là do",
         options: [
           "xu thế liên kết khu vực và toàn cầu hóa diễn ra mạnh mẽ",
           "trật tự nhất siêu, nhiều cường đang trong quá trình mở rộng",
-          "chịu nhiều tổn kém và bị suy giảm thế mạnh về nhiều mặt",
+          "chịu nhiều tốn kém và bị suy giảm thế mạnh về nhiều mặt",
           "quá trình mở rộng không ngừng của Liên minh châu Âu (EU)"
         ],
-        correct: 2
+        correct: 2,
+        note: "Cuộc chạy đua vũ trang kéo dài quá tốn kém làm suy giảm thế mạnh kinh tế - tài chính của cả Liên Xô và Mỹ."
       },
       {
+        id: 25,
         q: "Nội dung nào không phải là biểu hiện của xu thế đa cực?",
         options: [
           "Hoạt động của các công ty xuyên quốc gia có ảnh hưởng ngày càng lớn",
@@ -644,9 +1394,11 @@
           "Vai trò của các trung tâm, tổ chức kinh tế quốc tế và khu vực ngày càng lớn",
           "Sự suy giảm sức mạnh tương đối của Mỹ so với các cường quốc khác"
         ],
-        correct: 1
+        correct: 1,
+        note: "Các quốc gia cạnh tranh và hợp tác nhằm vươn lên khẳng định vị thế trong trật tự thế giới mới (đa cực), không phải nhằm 'tái thiết trật tự thế giới cũ'."
       },
       {
+        id: 26,
         q: "Nội dung nào sau đây phản ánh điểm khác biệt giữa trật tự thế giới mới sau Chiến tranh lạnh so với trật tự hai cực Ianta?",
         options: [
           "Bị chi phối bởi quyền lợi của các cường quốc",
@@ -654,9 +1406,11 @@
           "Hình thành sau khi chiến tranh thế giới kết thúc",
           "Hòa bình, đối thoại, hợp tác là xu thế chủ đạo"
         ],
-        correct: 3
+        correct: 3,
+        note: "Sau Chiến tranh lạnh, hòa bình, đối thoại và hợp tác cùng phát triển trở thành xu thế chủ đạo trong quan hệ quốc tế."
       },
       {
+        id: 27,
         q: "Một trong những biểu hiện của xu thế đa cực đầu thế kỉ XXI là",
         options: [
           "vai trò ngày càng tăng của các trung tâm quyền lực",
@@ -664,9 +1418,11 @@
           "các liên minh kinh tế khu vực bước đầu thành lập",
           "Mỹ khống chế và chi phối tất cả tình hình thế giới"
         ],
-        correct: 0
+        correct: 0,
+        note: "Đầu thế kỉ XXI, các trung tâm quyền lực lớn (Mỹ, Trung Quốc, EU, Nhật Bản, LB Nga, Ấn Độ...) ngày càng gia tăng ảnh hưởng."
       },
       {
+        id: 28,
         q: "Tổ chức Liên Hợp Quốc thúc đẩy mạnh mẽ sự phát triển của các nước thành viên trên nhiều lĩnh vực, ngoại trừ lĩnh vực nào?",
         options: [
           "Kinh tế",
@@ -674,9 +1430,11 @@
           "Quân sự",
           "Văn hóa"
         ],
-        correct: 2
+        correct: 2,
+        note: "LHQ chủ trương giải trừ quân bị, chống chạy đua vũ trang chứ không thúc đẩy phát triển tiềm lực quân sự của các nước."
       },
       {
+        id: 29,
         q: "Sau Chiến tranh lạnh kết thúc, sự vươn lên mạnh mẽ của các cường quốc mới nổi đã dẫn đến hệ quả nào sau đây?",
         options: [
           "Đã làm suy giảm sức mạnh tương đối của Mỹ",
@@ -684,9 +1442,11 @@
           "Chấm dứt sự cạnh tranh kinh tế các quốc gia",
           "Khiến cuộc chiến tranh thế giới mới bùng nổ"
         ],
-        correct: 0
+        correct: 0,
+        note: "Dù Mỹ vẫn là cường quốc số 1, sự trỗi dậy của các cường quốc mới nổi đã làm suy giảm sức mạnh tương đối của Mỹ so với các trung tâm khác."
       },
       {
+        id: 30,
         q: "Trật tự hai cực Ianta sụp đổ năm 1991 đã",
         options: [
           "chấm dứt hoàn toàn các cuộc xung đột ở khu vực",
@@ -694,9 +1454,11 @@
           "làm gia tăng vai trò của một số cường quốc mới nổi",
           "đưa Mỹ trở thành cường quốc duy nhất trên thế giới"
         ],
-        correct: 2
+        correct: 2,
+        note: "Sự sụp đổ của Trật tự hai cực Ianta năm 1991 mở đường cho xu thế đa cực và làm gia tăng vai trò của các cường quốc mới nổi."
       },
       {
+        id: 31,
         q: "Một trong những vai trò của Liên Hợp Quốc về bảo đảm quyền con người, phát triển văn hóa xã hội là",
         options: [
           "ra công ước về chống chạy đua vũ trang",
@@ -704,9 +1466,11 @@
           "làm trung gian hòa giải các cuộc xung đột",
           "tạo cơ hội phát triển cho tất cả mọi người"
         ],
-        correct: 3
+        correct: 3,
+        note: "Các phương án A, B, C thuộc vai trò 'Duy trì hòa bình, an ninh quốc tế'; 'tạo cơ hội phát triển cho tất cả mọi người' thuộc vai trò bảo đảm quyền con người, phát triển văn hóa - xã hội."
       },
       {
+        id: 32,
         q: "Nhận xét nào sau đây là đúng về đặc điểm nổi bật của quan hệ quốc tế từ đầu những năm 70 của thế kỷ XX đến năm 1991?",
         options: [
           "Đối thoại hòa bình là xu thế chủ đạo",
@@ -714,9 +1478,11 @@
           "Liên minh giữa Mỹ và Liên Xô ra đời",
           "Vừa đối đầu vừa đối thoại, hợp tác"
         ],
-        correct: 3
+        correct: 3,
+        note: "Từ đầu thập niên 1970 đến 1991, xu thế hòa hoãn Đông - Tây xuất hiện nên quan hệ quốc tế mang đặc điểm vừa đối đầu vừa đối thoại, hợp tác."
       },
       {
+        id: 33,
         q: "Sự hình thành xu thế đa cực, nhiều trung tâm sau Chiến tranh lạnh có tác động nào sau đây đối với tình hình thế giới và quan hệ quốc tế?",
         options: [
           "Ngăn chặn được mọi cuộc chiến tranh, xung đột",
@@ -724,9 +1490,11 @@
           "Góp phần củng cố hòa bình và an ninh quốc tế",
           "Mở ra quá trình hình thành của xu thế toàn cầu hóa"
         ],
-        correct: 2
+        correct: 2,
+        note: "Sự cân bằng và kiềm chế lẫn nhau giữa nhiều cực, nhiều trung tâm góp phần củng cố hòa bình, an ninh quốc tế."
       },
       {
+        id: 34,
         q: "Từ ngày 25-4-1945 đến ngày 26-6-1945, Hội nghị quốc tế họp tại San Francisco (Mỹ) với sự tham gia của đại biểu 50 nước đã thông qua văn kiện nào sau đây?",
         options: [
           "Tuyên bố Băng Cốc",
@@ -734,9 +1502,11 @@
           "Tuyên ngôn Quốc tế Nhân quyền",
           "Hiến chương Liên Hợp Quốc"
         ],
-        correct: 3
+        correct: 3,
+        note: "Hội nghị San Francisco (25/4 – 26/6/1945) với đại biểu 50 nước đã thông qua bản Hiến chương Liên Hợp Quốc."
       },
       {
+        id: 35,
         q: "Nội dung nào dưới đây là một trong những mục đích thành lập Liên Hợp Quốc?",
         options: [
           "Phát triển mối quan hệ giữa các dân tộc",
@@ -744,9 +1514,11 @@
           "Giải thể các tổ chức phi chính phủ",
           "Kết thúc mọi tranh chấp trên thế giới"
         ],
-        correct: 0
+        correct: 0,
+        note: "Theo Điều 1 Hiến chương LHQ, một trong 4 mục tiêu chính là phát triển mối quan hệ hữu nghị giữa các dân tộc."
       },
       {
+        id: 36,
         q: "Những quyết định của Hội nghị Ianta (2/1945) về sự phân chia phạm vi ảnh hưởng của các cường quốc ở châu Âu và châu Á đã",
         options: [
           "thay đổi cục diện Chiến tranh thế giới thứ hai",
@@ -754,9 +1526,11 @@
           "tạo lợi thế cho phong trào giải phóng dân tộc",
           "vi phạm chủ quyền của các quốc gia dân tộc"
         ],
-        correct: 3
+        correct: 3,
+        note: "Việc các cường quốc tự thỏa thuận đóng quân và phân chia phạm vi ảnh hưởng (như tại Triều Tiên, Trung Quốc, Đông Nam Á...) đã xâm phạm chủ quyền dân tộc của nhiều nước."
       },
       {
+        id: 37,
         q: "Nguyên thủ của quốc gia nào sau đây không tham dự Hội nghị Ianta (2-1945)?",
         options: [
           "Hà Lan",
@@ -764,9 +1538,11 @@
           "Liên Xô",
           "Mỹ"
         ],
-        correct: 0
+        correct: 0,
+        note: "Hội nghị Ianta chỉ có nguyên thủ 3 cường quốc Liên Xô (Stalin), Mỹ (Roosevelt) và Anh (Churchill) tham dự."
       },
       {
+        id: 38,
         q: "Một trong những văn kiện quan trọng được Liên Hợp Quốc ban hành nhằm duy trì hòa bình và an ninh thế giới là",
         options: [
           "Hiệp ước cấm phổ biến vũ khí hạt nhân",
@@ -774,9 +1550,11 @@
           "Tuyên ngôn Quốc tế Nhân quyền",
           "Chương trình nghị sự 2030"
         ],
-        correct: 0
+        correct: 0,
+        note: "Hiệp ước cấm phổ biến vũ khí hạt nhân (NPT, 1968) là văn kiện giải trừ quân bị nhằm duy trì hòa bình, an ninh quốc tế."
       },
       {
+        id: 39,
         q: "Trải qua hơn 70 năm hoạt động, LHQ đã có nhiều vai trò, đóng góp trên các lĩnh vực, ngoại trừ việc",
         options: [
           "ngăn chặn được các cuộc đối đầu Đông-Tây diễn ra trên thế giới",
@@ -784,9 +1562,11 @@
           "thúc đẩy quá trình phi thực dân hóa ở nhiều nơi trên thế giới",
           "ra các văn kiện nhằm thúc đẩy môi trường hòa bình và hợp tác"
         ],
-        correct: 0
+        correct: 0,
+        note: "LHQ không ngăn chặn được tình trạng đối đầu Đông - Tây (Chiến tranh lạnh) diễn ra suốt giai đoạn 1947–1989."
       },
       {
+        id: 40,
         q: "Vai trò duy trì hòa bình, an ninh quốc tế của LHQ được thể hiện qua hoạt động nào sau đây?",
         options: [
           "Góp phần chấm dứt nhiều cuộc xung đột trên thế giới",
@@ -794,9 +1574,11 @@
           "Đề ra mục tiêu phát triển Thiên niên kỉ nhằm xóa bỏ đói nghèo",
           "Kí điều ước quốc tế về quyền phụ nữ và trẻ em"
         ],
-        correct: 0
+        correct: 0,
+        note: "Hoạt động làm trung gian hòa giải, gìn giữ hòa bình và chấm dứt các cuộc xung đột thể hiện trực tiếp vai trò duy trì hòa bình, an ninh quốc tế."
       },
       {
+        id: 41,
         q: "Nội dung nào là đặc điểm của quan hệ quốc tế từ đầu những năm 70 của thế kỷ XX đến năm 1991?",
         options: [
           "Trật tự thế giới hai cực Ianta suy yếu và đi đến sụp đổ",
@@ -804,9 +1586,11 @@
           "Hệ thống xã hội chủ nghĩa được hình thành và mở rộng",
           "Chính thức xác lập cục diện hai cực hai phe trên thế giới"
         ],
-        correct: 0
+        correct: 0,
+        note: "Giai đoạn từ đầu những năm 1970 đến 1991 là giai đoạn Trật tự hai cực Ianta xói mòn, suy yếu rồi sụp đổ hoàn toàn khi Liên Xô tan rã."
       },
       {
+        id: 42,
         q: "Việc Hiến chương Liên Hợp Quốc được thông qua và có hiệu lực năm 1945 có ý nghĩa nào?",
         options: [
           "Đặt nền tảng pháp lý cho nền hòa bình và an ninh quốc tế hậu chiến",
@@ -814,9 +1598,11 @@
           "Mở đường cho việc chia sẻ ảnh hưởng giữa các cường quốc thế giới",
           "Tạo điều kiện để mở rộng liên minh quân sự giữa những cường quốc"
         ],
-        correct: 0
+        correct: 0,
+        note: "Hiến chương LHQ là văn kiện pháp lý quốc tế nền tảng quy định mục tiêu, nguyên tắc bảo vệ hòa bình và an ninh thế giới sau CTTG thứ hai."
       },
       {
+        id: 43,
         q: "Nội dung nào sau đây thể hiện tác động của xu thế đa cực đối với quan hệ quốc tế?",
         options: [
           "Tạo điều kiện cho các nước lớn mới nổi có vị thế ngày càng cao trên trường quốc tế",
@@ -824,9 +1610,11 @@
           "Mỹ, Trung Quốc quyết định và chi phối sự phát triển của các quốc gia trên thế giới",
           "Chấm dứt hoàn toàn những cuộc xung đột sắc tộc trên thế giới"
         ],
-        correct: 0
+        correct: 0,
+        note: "Xu thế đa cực giúp các cường quốc mới nổi nâng cao vị thế và tiếng nói trong các vấn đề quốc tế."
       },
       {
+        id: 44,
         q: "Nhận định nào sau đây là không đúng về Hội nghị Ianta (tháng 2/1945)?",
         options: [
           "Có ảnh hưởng lớn đến vấn đề hòa bình thời kì hậu chiến",
@@ -834,9 +1622,11 @@
           "Vi phạm nghiêm trọng quyền tự quyết của một số nước",
           "Hội nghị diễn ra trong một thời gian dài, đầy căng thẳng"
         ],
-        correct: 3
+        correct: 3,
+        note: "Hội nghị Ianta chỉ diễn ra trong 8 ngày (từ 4/2 đến 11/2/1945), không phải diễn ra trong một thời gian dài."
       },
       {
+        id: 45,
         q: "Nhận xét nào sau đây đúng về sự ra đời của tổ chức Liên Hợp Quốc?",
         options: [
           "Quá trình hình thành kéo dài với nhiều hội nghị quan trọng",
@@ -844,9 +1634,11 @@
           "Nhanh chóng hoàn thiện về mặt tổ chức, gắn với vai trò của Mỹ",
           "Có sự tham gia chuẩn bị của các nước mới giành độc lập"
         ],
-        correct: 0
+        correct: 0,
+        note: "Quá trình hình thành LHQ kéo dài từ năm 1941 đến 1945 qua nhiều hội nghị (Luân Đôn, Oasinhtơn, Têhêran, Đơmbatơn Ốc, Ianta, San Francisco); ngày 24/10/1945 mới chính thức thành lập (sau khi CTTG 2 đã kết thúc)."
       },
       {
+        id: 46,
         q: "Để tiêu diệt chủ nghĩa quân phiệt Nhật Bản và nhanh chóng kết thúc chiến tranh, Hội nghị Ianta (tháng 2-1945) đã quyết định",
         options: [
           "thành lập phe Đồng minh chống phát xít trên thế giới",
@@ -854,9 +1646,11 @@
           "Liên Xô sẽ tham gia chiến tranh chống Nhật ở châu Á",
           "Anh và Liên Xô sẽ tiêu diệt lực lượng quân Nhật tại Trung Quốc"
         ],
-        correct: 2
+        correct: 2,
+        note: "Tại Hội nghị Ianta, Liên Xô cam kết sẽ tham chiến chống Nhật ở châu Á sau khi chiến tranh kết thúc ở châu Âu từ 2 đến 3 tháng."
       },
       {
+        id: 47,
         q: "Nội dung nào không phản ánh đúng về trật tự hai cực Ianta?",
         options: [
           "Được hoàn chỉnh ngay trong Hội nghị Ianta",
@@ -864,9 +1658,11 @@
           "Được đặt dưới sự chi phối của các cường quốc",
           "Nhân tố hàng đầu chi phối nền chính trị thế giới"
         ],
-        correct: 0
+        correct: 0,
+        note: "Hội nghị Ianta mới chỉ đặt khuôn khổ bước đầu; Trật tự hai cực Ianta được xác lập hoàn chỉnh trong những năm 1945–1949 (và đến 1955 với sự ra đời của NATO - Vácsava)."
       },
       {
+        id: 48,
         q: "Trong xu thế đa cực, để vươn lên khẳng định vị thế của mình, các quốc gia lựa chọn phương thức đối ngoại chủ yếu nào?",
         options: [
           "Vừa tiếp xúc vừa giao thoa",
@@ -874,9 +1670,11 @@
           "Vừa cạnh tranh vừa hợp tác",
           "Vừa đối đầu vừa hòa hoãn"
         ],
-        correct: 2
+        correct: 2,
+        note: "Trong thế giới đa cực, các quốc gia điều chỉnh quan hệ theo hướng vừa cạnh tranh vừa hợp tác nhằm phục vụ lợi ích dân tộc."
       },
       {
+        id: 49,
         q: "Nhận xét nào sau đây phản ánh không đúng về quá trình hình thành của Liên Hợp Quốc?",
         options: [
           "Quá trình ra đời phức tạp, trải qua nhiều hội nghị quốc tế khác nhau",
@@ -884,9 +1682,11 @@
           "Phù hợp với khát vọng duy trì hòa bình của nhân loại tiến bộ thế giới",
           "Các cường quốc Đồng minh giữ vai trò chủ đạo trong việc thành lập"
         ],
-        correct: 1
+        correct: 1,
+        note: "Liên Hợp Quốc thành lập năm 1945, trong khi xu thế toàn cầu hóa chỉ xuất hiện rõ nét từ những năm 80 của thế kỷ XX."
       },
       {
+        id: 50,
         q: "Nội dung nào sau đây là một trong những nhân tố tác động đến sự hình thành trật tự thế giới mới sau khi Chiến tranh lạnh kết thúc?",
         options: [
           "Sự trỗi dậy của chủ nghĩa khủng bố trên phạm vi toàn cầu",
@@ -894,9 +1694,11 @@
           "Cuộc đấu tranh chống chế độ phân biệt chủng tộc ở châu Phi",
           "Cuộc chạy đua về sức mạnh tổng hợp giữa các cường quốc"
         ],
-        correct: 3
+        correct: 3,
+        note: "Sau Chiến tranh lạnh, sự hình thành trật tự thế giới mới phụ thuộc trực tiếp vào cuộc chạy đua về sức mạnh quốc gia tổng hợp (lấy kinh tế làm trọng tâm) giữa các cường quốc."
       },
       {
+        id: 51,
         q: "Năm 1948, văn kiện nào sau đây đã được Đại hội đồng Liên Hợp Quốc thông qua, khẳng định những quyền cơ bản của con người?",
         options: [
           "Tuyên ngôn Nhân quyền",
@@ -904,9 +1706,11 @@
           "Hiến chương Liên hợp quốc",
           "Hiệp ước cấm vũ khí hạt nhân"
         ],
-        correct: 0
+        correct: 0,
+        note: "Ngày 10/12/1948, Đại hội đồng LHQ thông qua Tuyên ngôn Quốc tế Nhân quyền (Universal Declaration of Human Rights)."
       },
       {
+        id: 52,
         q: "LHQ được thành lập năm 1945 nhằm đáp ứng chủ yếu nhu cầu nào sau đây của toàn thể nhân loại?",
         options: [
           "Bảo vệ nền hòa bình và an ninh toàn thế giới",
@@ -914,9 +1718,11 @@
           "Chú trọng phát triển các loại vũ khí hủy diệt",
           "Chống biến đổi khí hậu trên toàn cầu"
         ],
-        correct: 0
+        correct: 0,
+        note: "Khát vọng bức thiết nhất của nhân loại sau CTTG thứ hai là bảo vệ nền hòa bình và an ninh toàn thế giới."
       },
       {
+        id: 53,
         q: "Hội nghị nào sau đây không có tác động đến sự ra đời của Liên Hợp Quốc?",
         options: [
           "Hội nghị Véc-xai (1921)",
@@ -924,9 +1730,11 @@
           "Hội nghị Ianta (1945)",
           "Hội nghị Teheran (1943)"
         ],
-        correct: 0
+        correct: 0,
+        note: "Hội nghị Vécxai (1919–1920) gắn với sự ra đời của Hội Quốc liên sau CTTG thứ nhất, không phải Liên Hợp Quốc."
       },
       {
+        id: 54,
         q: "Tổ chức Hiệp ước Bắc Đại Tây Dương (1949) và tổ chức Hiệp ước Vácsava (1955) là một trong những biểu hiện về sự đối đầu của hai cực trong trật tự thế giới Ianta trên lĩnh vực chủ yếu nào?",
         options: [
           "Kinh tế",
@@ -934,9 +1742,11 @@
           "Chính trị",
           "Quân sự"
         ],
-        correct: 3
+        correct: 3,
+        note: "NATO (1949) và Tổ chức Hiệp ước Vácsava (1955) là hai liên minh quân sự lớn đối đầu nhau trong Chiến tranh lạnh."
       },
       {
+        id: 55,
         q: "Trong những thập niên đầu của thế kỉ XXI, nhân tố nào sau đây sẽ còn tiếp tục tạo ra những “đột phá” và biến chuyển trong cục diện thế giới?",
         options: [
           "Sự vươn lên mạnh mẽ của Nhật Bản và Tây Âu",
@@ -944,9 +1754,11 @@
           "Sự phát triển của cách mạng khoa học - kĩ thuật",
           "Cuộc chạy đua vũ trang giữa Mỹ và Liên Xô"
         ],
-        correct: 2
+        correct: 2,
+        note: "Sự phát triển mạnh mẽ của cách mạng khoa học - kĩ thuật (và công nghệ hiện đại) tiếp tục tạo ra những đột phá làm thay đổi cục diện thế giới thế kỉ XXI."
       },
       {
+        id: 56,
         q: "Quá trình hình thành và tồn tại của Trật tự hai cực Ianta (1945 – 1991) có đặc điểm nào sau đây?",
         options: [
           "Là hệ quả trực tiếp của cách mạng khoa học công nghiệp",
@@ -954,9 +1766,11 @@
           "Chịu sự tác động, chi phối mạnh mẽ của Liên hợp quốc",
           "Có sự thỏa hiệp giữa các cường quốc vì lợi ích quốc gia"
         ],
-        correct: 3
+        correct: 3,
+        note: "Trật tự hai cực Ianta phản ánh cả sự đối đầu lẫn sự thỏa hiệp, dàn xếp giữa hai siêu cường Liên Xô và Mỹ vì lợi ích quốc gia của mỗi nước."
       },
       {
+        id: 57,
         q: "Trong trật tự thế giới đa cực, sự gia tăng vai trò của các trung tâm, các tổ chức quốc tế phản ánh điều gì?",
         options: [
           "Nền kinh tế thế giới đã đạt được công bằng mới",
@@ -964,9 +1778,11 @@
           "Quy luật phát triển đồng đều của lịch sử thế giới",
           "So sánh lực lượng mới trong quan hệ quốc tế"
         ],
-        correct: 3
+        correct: 3,
+        note: "Sự trỗi dậy của các trung tâm quyền lực và tổ chức quốc tế phản ánh tương quan so sánh lực lượng mới trong quan hệ quốc tế sau Chiến tranh lạnh."
       },
       {
+        id: 58,
         q: "Sau Chiến tranh lạnh, nội dung chủ yếu trong cuộc cạnh tranh giữa các cường quốc là",
         options: [
           "tăng cường chạy đua quân sự và đối đầu bằng vũ khí hạt nhân",
@@ -974,9 +1790,11 @@
           "thiết lập lại hệ thống thuộc địa kiểu cũ ở châu Á và châu Phi",
           "xây dựng sức mạnh quốc gia tổng hợp, đặc biệt là về kinh tế"
         ],
-        correct: 3
+        correct: 3,
+        note: "Sau Chiến tranh lạnh, các quốc gia tập trung xây dựng sức mạnh tổng hợp của quốc gia, trong đó lấy phát triển kinh tế, khoa học - công nghệ làm trọng tâm."
       },
       {
+        id: 59,
         q: "Sự kết thúc trật tự thế giới hai cực Ianta có tác động nào sau đây đến quan hệ quốc tế?",
         options: [
           "Duy trì thế đối đầu căng thẳng giữa hai phe, hai cực",
@@ -984,9 +1802,11 @@
           "Làm bùng nổ các cuộc xung đột giữa các quốc gia",
           "Tái lập hệ thống đồng minh quân sự trên toàn cầu"
         ],
-        correct: 1
+        correct: 1,
+        note: "Trật tự hai cực Ianta kết thúc đã mở ra thời kỳ mới, thúc đẩy xu thế hòa bình, đối thoại và hợp tác cùng phát triển."
       },
       {
+        id: 60,
         q: "Đặc điểm nổi bật của quan hệ quốc tế từ sau Chiến tranh thế giới thứ hai đến đầu những năm 70 của thế kỷ XX là gì?",
         options: [
           "Hòa bình, hợp tác trở thành xu thế chủ đạo",
@@ -994,9 +1814,11 @@
           "Hai siêu cường Xô - Mỹ đối đầu gay gắt",
           "Xu thế toàn cầu hóa diễn ra mạnh mẽ"
         ],
-        correct: 2
+        correct: 2,
+        note: "Từ sau CTTG 2 đến đầu những năm 1970 là giai đoạn đối đầu gay gắt giữa hai siêu cường Liên Xô và Mỹ."
       },
       {
+        id: 61,
         q: "Theo quyết định của Hội nghị Ianta (2-1945), khu vực nào sau đây không thuộc phạm vi ảnh hưởng của Liên Xô?",
         options: [
           "Đông Nam Á",
@@ -1004,32 +1826,135 @@
           "Đông Âu",
           "Đông Đức"
         ],
-        correct: 0
+        correct: 0,
+        note: "Theo thỏa thuận Ianta, Đông Nam Á thuộc phạm vi ảnh hưởng truyền thống của các nước phương Tây; Đông Đức, Đông Béc-lin, Đông Âu thuộc phạm vi ảnh hưởng của Liên Xô."
       }
     ];
 
-    // ===================== LOGIC =====================
+    // ===================== QUẢN LÝ TRẠNG THÁI & LỊCH SỬ CÂU SAI =====================
+    const STORAGE_KEY = 'ls12_mistake_stats_v2';
+    // Cấu trúc: { [questionId]: { wrongCount: number, correctCount: number, pinned: boolean, lastWrong: number } }
+    let mistakeStats = {};
+    let quizMode = 'streak'; // 'streak' | 'mistakes' | 'free'
+    let prioritizeMistakes = true;
+    let activeQueue = [];
     let currentIndex = 0;
     let retryCount = 0;
+    let currentStreak = 0;
     let isAnswering = false;
-    let currentShuffled = [];   // lưu thứ tự đã xáo của câu hiện tại
-    let currentCorrectIndex = 0; // vị trí đáp án đúng sau khi xáo
+    let currentShuffled = [];
+    let currentCorrectIndex = 0;
+    let auditFilter = 'all';
 
-    const startScreen = document.getElementById('startScreen');
-    const quizScreen = document.getElementById('quizScreen');
-    const finishScreen = document.getElementById('finishScreen');
-    const questionCard = document.getElementById('questionCard');
-    const qNumber = document.getElementById('qNumber');
-    const qText = document.getElementById('qText');
-    const optionsEl = document.getElementById('options');
-    const feedback = document.getElementById('feedback');
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
-    const retryCountEl = document.getElementById('retryCount');
-    const streakEl = document.getElementById('streak');
-    const resetMsg = document.getElementById('resetMsg');
+    function loadStats() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            mistakeStats = parsed;
+          }
+        }
+      } catch (e) {
+        mistakeStats = {};
+      }
+      updateGlobalBadges();
+    }
 
-    // Hàm xáo trộn mảng (Fisher-Yates)
+    function saveStats() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(mistakeStats));
+      } catch (e) {
+        // Bỏ qua nếu môi trường chặn localStorage
+      }
+      updateGlobalBadges();
+    }
+
+    function getStat(qId) {
+      if (!mistakeStats[qId]) {
+        mistakeStats[qId] = { wrongCount: 0, correctCount: 0, pinned: false, lastWrong: 0 };
+      }
+      return mistakeStats[qId];
+    }
+
+    function getMistakeQuestionList() {
+      return questions.filter(q => {
+        const st = getStat(q.id);
+        return st.wrongCount > 0 || st.pinned;
+      });
+    }
+
+    function updateGlobalBadges() {
+      const mistakeList = getMistakeQuestionList();
+      const count = mistakeList.length;
+      const badgeEl = document.getElementById('mistakeCountBadge');
+      const modePill = document.getElementById('modeMistakePill');
+      const totalMistakeEl = document.getElementById('totalMistakeQuestions');
+
+      if (badgeEl) badgeEl.textContent = count;
+      if (modePill) modePill.textContent = count + ' câu';
+      if (totalMistakeEl) totalMistakeEl.textContent = count;
+    }
+
+    // ===================== ĐIỀU HƯỚNG TAB =====================
+    function switchTab(tabName) {
+      const views = {
+        quiz: document.getElementById('tabQuizView'),
+        mistakes: document.getElementById('tabMistakesView'),
+        audit: document.getElementById('tabAuditView')
+      };
+      const btns = {
+        quiz: document.getElementById('tabQuizBtn'),
+        mistakes: document.getElementById('tabMistakesBtn'),
+        audit: document.getElementById('tabAuditBtn')
+      };
+
+      Object.keys(views).forEach(k => {
+        if (k === tabName) {
+          views[k].classList.remove('hidden');
+          btns[k].classList.add('active');
+        } else {
+          views[k].classList.add('hidden');
+          btns[k].classList.remove('active');
+        }
+      });
+
+      if (tabName === 'mistakes') {
+        renderMistakesTab();
+      } else if (tabName === 'audit') {
+        renderAuditList();
+      }
+    }
+
+    // ===================== CẤU HÌNH CHẾ ĐỘ & HÀNG ĐỢI ƯU TIÊN =====================
+    function selectMode(mode) {
+      quizMode = mode;
+      document.getElementById('modeCardStreak').classList.toggle('selected', mode === 'streak');
+      document.getElementById('modeCardMistakes').classList.toggle('selected', mode === 'mistakes');
+      document.getElementById('modeCardFree').classList.toggle('selected', mode === 'free');
+    }
+
+    function togglePriorityMode(checked) {
+      prioritizeMistakes = Boolean(checked);
+      const toggleEl = document.getElementById('priorityToggleStart');
+      if (toggleEl && toggleEl.checked !== prioritizeMistakes) {
+        toggleEl.checked = prioritizeMistakes;
+      }
+      updatePriorityBadge();
+    }
+
+    function updatePriorityBadge() {
+      const badge = document.getElementById('priorityActiveBadge');
+      if (!badge) return;
+      if (prioritizeMistakes || quizMode === 'mistakes') {
+        badge.className = 'status-pill warning';
+        badge.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span>Ưu tiên câu sai: Bật</span>`;
+      } else {
+        badge.className = 'status-pill';
+        badge.innerHTML = `<span>Thứ tự chuẩn (1 → 61)</span>`;
+      }
+    }
+
     function shuffleArray(array) {
       const arr = [...array];
       for (let i = arr.length - 1; i > 0; i--) {
@@ -1039,48 +1964,157 @@
       return arr;
     }
 
+    // Tạo danh sách câu hỏi theo chế độ & trọng số câu sai
+    function buildQuestionQueue() {
+      let pool = [...questions];
+
+      if (quizMode === 'mistakes') {
+        const mistakePool = getMistakeQuestionList();
+        if (mistakePool.length > 0) {
+          pool = mistakePool;
+        }
+      }
+
+      if (prioritizeMistakes || quizMode === 'mistakes') {
+        pool.sort((a, b) => {
+          const stA = getStat(a.id);
+          const stB = getStat(b.id);
+          // Điểm ưu tiên: mỗi lần sai +10 điểm, gắn sao +5 điểm
+          const scoreA = (stA.wrongCount * 10) + (stA.pinned ? 5 : 0);
+          const scoreB = (stB.wrongCount * 10) + (stB.pinned ? 5 : 0);
+          if (scoreB !== scoreA) return scoreB - scoreA;
+          if (stB.lastWrong !== stA.lastWrong) return stB.lastWrong - stA.lastWrong;
+          return a.id - b.id;
+        });
+      } else {
+        pool.sort((a, b) => a.id - b.id);
+      }
+
+      return pool;
+    }
+
     function startQuiz() {
+      switchTab('quiz');
+      activeQueue = buildQuestionQueue();
       currentIndex = 0;
       retryCount = 0;
+      currentStreak = 0;
       isAnswering = false;
-      startScreen.classList.add('hidden');
-      finishScreen.classList.add('hidden');
-      quizScreen.classList.remove('hidden');
-      resetMsg.classList.remove('show');
+
+      const modeLabel = document.getElementById('activeModeLabel');
+      if (quizMode === 'streak') {
+        modeLabel.textContent = 'Thử thách Chuỗi đúng';
+      } else if (quizMode === 'mistakes') {
+        modeLabel.textContent = getMistakeQuestionList().length > 0
+          ? `Luyện riêng Câu hay sai (${activeQueue.length} câu)`
+          : 'Luyện tập (Chưa có câu sai → Tất cả 61 câu)';
+      } else {
+        modeLabel.textContent = 'Ôn tập Tự do (Không reset)';
+      }
+
+      updatePriorityBadge();
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('finishScreen').classList.add('hidden');
+      document.getElementById('quizScreen').classList.remove('hidden');
+      document.getElementById('resetMsg').classList.remove('show');
+
       updateProgress();
       showQuestion();
     }
 
+    function returnToMenu() {
+      updateGlobalBadges();
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('finishScreen').classList.add('hidden');
+      document.getElementById('startScreen').classList.remove('hidden');
+    }
+
+    function startMistakeDrillNow() {
+      selectMode('mistakes');
+      togglePriorityMode(true);
+      startQuiz();
+    }
+
+    // ===================== HIỂN THỊ & XỬ LÝ CÂU HỎI =====================
     function updateProgress() {
-      const total = questions.length;
-      const percent = (currentIndex / total) * 100;
-      progressFill.style.width = percent + '%';
-      progressText.textContent = `${currentIndex} / ${total}`;
-      retryCountEl.textContent = retryCount;
-      streakEl.textContent = currentIndex;
+      const total = activeQueue.length || 1;
+      const percent = Math.min(100, (currentIndex / total) * 100);
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('progressText').textContent = `${currentIndex} / ${total}`;
+      document.getElementById('retryCount').textContent = retryCount;
+      document.getElementById('streak').textContent = currentStreak;
+      updateGlobalBadges();
+    }
+
+    function updatePinButtonUI(qId) {
+      const st = getStat(qId);
+      const btn = document.getElementById('pinQuestionBtn');
+      const txt = document.getElementById('pinQuestionText');
+      if (st.pinned) {
+        btn.classList.add('pinned');
+        txt.textContent = 'Đã gắn sao ưu tiên';
+      } else {
+        btn.classList.remove('pinned');
+        txt.textContent = 'Ưu tiên câu này';
+      }
+    }
+
+    function togglePinCurrentQuestion() {
+      const q = activeQueue[currentIndex];
+      if (!q) return;
+      const st = getStat(q.id);
+      st.pinned = !st.pinned;
+      saveStats();
+      updatePinButtonUI(q.id);
     }
 
     function showQuestion() {
       isAnswering = false;
-      const q = questions[currentIndex];
-      qNumber.textContent = `Câu ${currentIndex + 1}`;
-      qText.textContent = q.q;
-      feedback.className = 'feedback';
-      feedback.textContent = '';
+      const q = activeQueue[currentIndex];
+      const st = getStat(q.id);
+      const total = activeQueue.length;
+
+      document.getElementById('qNumber').textContent = `Câu ${currentIndex + 1} / ${total}`;
+      document.getElementById('qOriginalId').textContent = `Câu gốc #${q.id}`;
+      document.getElementById('qText').textContent = q.q;
+
+      const mistakeBadge = document.getElementById('qMistakeBadge');
+      if (st.wrongCount > 0) {
+        mistakeBadge.classList.remove('hidden');
+        mistakeBadge.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Đã sai ${st.wrongCount} lần</span>`;
+      } else {
+        mistakeBadge.classList.add('hidden');
+      }
+
+      const fixedBadge = document.getElementById('qFixedBadge');
+      if (q.fixed) {
+        fixedBadge.classList.remove('hidden');
+      } else {
+        fixedBadge.classList.add('hidden');
+      }
+
+      updatePinButtonUI(q.id);
+
+      const feedback = document.getElementById('feedback');
+      feedback.className = 'feedback-box';
+      document.getElementById('nextQuestionBtn').classList.add('hidden');
+
+      const questionCard = document.getElementById('questionCard');
       questionCard.classList.remove('correct-flash', 'wrong-flash');
 
-      // Xáo trộn đáp án mỗi lần hiện câu hỏi
       const originalOptions = q.options.map((text, idx) => ({ text, originalIndex: idx }));
       currentShuffled = shuffleArray(originalOptions);
       currentCorrectIndex = currentShuffled.findIndex(item => item.originalIndex === q.correct);
 
+      const optionsEl = document.getElementById('options');
       optionsEl.innerHTML = '';
       currentShuffled.forEach((item, i) => {
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span>${item.text}</span>`;
-        div.onclick = () => selectOption(i);
-        optionsEl.appendChild(div);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + i)}</span><span>${item.text}</span>`;
+        btn.addEventListener('click', () => selectOption(i));
+        optionsEl.appendChild(btn);
       });
     }
 
@@ -1088,51 +2122,251 @@
       if (isAnswering) return;
       isAnswering = true;
 
-      const optionEls = optionsEl.querySelectorAll('.option');
+      const q = activeQueue[currentIndex];
+      const st = getStat(q.id);
+      const optionEls = document.getElementById('options').querySelectorAll('.option-btn');
       optionEls.forEach(el => el.classList.add('disabled'));
 
+      const feedback = document.getElementById('feedback');
+      const feedbackTitle = document.getElementById('feedbackTitle');
+      const feedbackNote = document.getElementById('feedbackNote');
+      const nextBtn = document.getElementById('nextQuestionBtn');
+      const questionCard = document.getElementById('questionCard');
+
       if (selected === currentCorrectIndex) {
-        // ĐÚNG
+        // TRẢ LỜI ĐÚNG
+        st.correctCount = (st.correctCount || 0) + 1;
+        saveStats();
+
+        currentStreak++;
         optionEls[selected].classList.add('correct');
         questionCard.classList.add('correct-flash');
-        feedback.className = 'feedback show correct';
-        feedback.innerHTML = '✅ Chính xác! Tiếp tục nào...';
+
+        feedback.className = 'feedback-box show correct';
+        feedbackTitle.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Chính xác! Đang chuyển câu tiếp theo...</span>`;
+        feedbackNote.textContent = q.note || '';
 
         setTimeout(() => {
           currentIndex++;
-          if (currentIndex >= questions.length) {
-            // Hoàn thành
-            document.getElementById('totalQ').textContent = questions.length;
+          if (currentIndex >= activeQueue.length) {
+            document.getElementById('totalQ').textContent = activeQueue.length;
             document.getElementById('finalRetry').textContent = retryCount;
-            quizScreen.classList.add('hidden');
-            finishScreen.classList.remove('hidden');
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('finishScreen').classList.remove('hidden');
           } else {
             updateProgress();
             showQuestion();
           }
-        }, 900);
+        }, 950);
       } else {
-        // SAI → RESET
+        // TRẢ LỜI SAI
+        st.wrongCount = (st.wrongCount || 0) + 1;
+        st.lastWrong = Date.now();
+        saveStats();
+
+        currentStreak = 0;
         optionEls[selected].classList.add('wrong');
         optionEls[currentCorrectIndex].classList.add('correct');
         questionCard.classList.add('wrong-flash');
-        feedback.className = 'feedback show wrong';
-        feedback.innerHTML = '❌ Sai rồi! Đáp án đúng là <strong>' + String.fromCharCode(65 + currentCorrectIndex) + '</strong>';
 
-        retryCount++;
-        updateProgress();
+        const correctLetter = String.fromCharCode(65 + currentCorrectIndex);
+        const correctText = currentShuffled[currentCorrectIndex].text;
 
-        setTimeout(() => {
-          resetMsg.classList.add('show');
-          currentIndex = 0;
+        feedback.className = 'feedback-box show wrong';
+        feedbackTitle.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span>Sai rồi! Đáp án đúng là ${correctLetter}: ${correctText}</span>`;
+        feedbackNote.textContent = q.note || '';
+
+        // Cập nhật huy hiệu số lần sai ngay trên thẻ
+        const mistakeBadge = document.getElementById('qMistakeBadge');
+        mistakeBadge.classList.remove('hidden');
+        mistakeBadge.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Đã sai ${st.wrongCount} lần</span>`;
+
+        if (quizMode === 'streak') {
+          retryCount++;
+          updateProgress();
+
           setTimeout(() => {
-            resetMsg.classList.remove('show');
-            updateProgress();
-            showQuestion();
-          }, 1600);
-        }, 1400);
+            const resetMsg = document.getElementById('resetMsg');
+            const resetMsgText = document.getElementById('resetMsgText');
+            if (prioritizeMistakes) {
+              resetMsgText.textContent = `Sai câu #${q.id} (đã sai ${st.wrongCount} lần)! Hệ thống đã tự động đưa câu này và các câu sai nhiều nhất lên đầu để bạn làm lại từ Câu 1.`;
+            } else {
+              resetMsgText.textContent = `Sai rồi! Quay về Câu 1 và làm lại từ đầu nhé.`;
+            }
+            resetMsg.classList.add('show');
+            activeQueue = buildQuestionQueue();
+            currentIndex = 0;
+
+            setTimeout(() => {
+              resetMsg.classList.remove('show');
+              updateProgress();
+              showQuestion();
+            }, 1850);
+          }, 1500);
+        } else {
+          // Chế độ Luyện câu sai hoặc Ôn tập tự do: cho phép đọc kỹ giải thích rồi bấm Câu tiếp theo
+          updateProgress();
+          nextBtn.classList.remove('hidden');
+        }
       }
     }
+
+    function advanceNextQuestion() {
+      currentIndex++;
+      if (currentIndex >= activeQueue.length) {
+        document.getElementById('totalQ').textContent = activeQueue.length;
+        document.getElementById('finalRetry').textContent = retryCount;
+        document.getElementById('quizScreen').classList.add('hidden');
+        document.getElementById('finishScreen').classList.remove('hidden');
+      } else {
+        updateProgress();
+        showQuestion();
+      }
+    }
+
+    // ===================== TAB 2: DANH SÁCH CÂU SAI NHIỀU =====================
+    function renderMistakesTab() {
+      const container = document.getElementById('mistakesContainer');
+      const mistakeList = getMistakeQuestionList().sort((a, b) => {
+        const stA = getStat(a.id);
+        const stB = getStat(b.id);
+        return (stB.wrongCount * 10 + (stB.pinned ? 5 : 0)) - (stA.wrongCount * 10 + (stA.pinned ? 5 : 0));
+      });
+
+      if (mistakeList.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div style="display:inline-flex; padding:12px; border-radius:14px; background:rgba(255,255,255,0.04); border:1px solid var(--border-glass); margin-bottom:10px; color:var(--text-secondary);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <p style="font-weight:600; color:var(--text-primary); margin-bottom:4px;">Chưa có câu hỏi nào bị sai hoặc gắn sao ưu tiên</p>
+            <p style="font-size:0.85rem;">Khi bạn làm sai câu nào hoặc bấm nút "Ưu tiên câu này", câu hỏi sẽ xuất hiện tại đây và được tự động đẩy lên đầu bài ôn.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = mistakeList.map(q => {
+        const st = getStat(q.id);
+        return `
+          <div class="audit-item">
+            <div class="audit-item-top">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                <span class="status-pill primary">Câu gốc #${q.id}</span>
+                ${st.wrongCount > 0 ? `<span class="status-pill danger">Sai ${st.wrongCount} lần</span>` : ''}
+                ${st.correctCount > 0 ? `<span class="status-pill success">Đúng ${st.correctCount} lần</span>` : ''}
+                ${st.pinned ? `<span class="status-pill warning">Đã gắn sao ưu tiên</span>` : ''}
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="clearSingleQuestionMistake(${q.id})">
+                <span>Bỏ ưu tiên / Xóa số lần sai</span>
+              </button>
+            </div>
+            <div class="audit-q">${q.q}</div>
+            <div class="audit-opt is-correct" style="margin-top:6px;">
+              <span>Đáp án đúng: ${q.options[q.correct]}</span>
+            </div>
+            ${q.note ? `<div class="audit-explanation">${q.note}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function clearSingleQuestionMistake(qId) {
+      mistakeStats[qId] = { wrongCount: 0, correctCount: 0, pinned: false, lastWrong: 0 };
+      saveStats();
+      renderMistakesTab();
+    }
+
+    function openResetStatsModal() {
+      document.getElementById('resetModal').classList.add('show');
+    }
+
+    function closeResetStatsModal() {
+      document.getElementById('resetModal').classList.remove('show');
+    }
+
+    function confirmResetStats() {
+      mistakeStats = {};
+      saveStats();
+      closeResetStatsModal();
+      renderMistakesTab();
+    }
+
+    // ===================== TAB 3: TRA CỨU & ĐỐI CHIẾU ĐÁP ÁN =====================
+    function setAuditFilter(filterType) {
+      auditFilter = filterType;
+      document.getElementById('filterAllBtn').classList.toggle('active', filterType === 'all');
+      document.getElementById('filterFixedBtn').classList.toggle('active', filterType === 'fixed');
+      document.getElementById('filterWrongBtn').classList.toggle('active', filterType === 'wrong');
+      renderAuditList();
+    }
+
+    function renderAuditList() {
+      const query = (document.getElementById('auditSearchInput').value || '').trim().toLowerCase();
+      const container = document.getElementById('auditListContainer');
+
+      const filtered = questions.filter(q => {
+        const st = getStat(q.id);
+        if (auditFilter === 'fixed' && !q.fixed) return false;
+        if (auditFilter === 'wrong' && st.wrongCount === 0 && !st.pinned) return false;
+        if (query) {
+          const inQ = q.q.toLowerCase().includes(query);
+          const inOpts = q.options.some(opt => opt.toLowerCase().includes(query));
+          const inId = (`câu ${q.id}` === query) || (`#${q.id}` === query) || (String(q.id) === query);
+          return inQ || inOpts || inId;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="empty-state">Không tìm thấy câu hỏi phù hợp với bộ lọc hiện tại.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(q => {
+        const st = getStat(q.id);
+        const optionsHtml = q.options.map((opt, idx) => {
+          const letter = String.fromCharCode(65 + idx);
+          const isCorrect = idx === q.correct;
+          const wasWrongKey = q.fixed && idx === q.oldWrongIndex;
+          let cls = 'audit-opt';
+          if (isCorrect) cls += ' is-correct';
+          else if (wasWrongKey) cls += ' was-wrong-key';
+          return `<div class="${cls}"><strong>${letter}.</strong> <span>${opt}${wasWrongKey ? ' (Đáp án cũ bị lệch)' : ''}</span></div>`;
+        }).join('');
+
+        return `
+          <div class="audit-item ${q.fixed ? 'fixed-highlight' : ''}">
+            <div class="audit-item-top">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                <span class="status-pill primary">Câu ${q.id}</span>
+                ${q.fixed ? `<span class="status-pill warning">Đã sửa lại đáp án chuẩn</span>` : `<span class="status-pill success">Đáp án gốc chính xác</span>`}
+                ${st.wrongCount > 0 ? `<span class="status-pill danger">Đã sai ${st.wrongCount} lần</span>` : ''}
+              </div>
+              <button type="button" class="pin-btn ${st.pinned ? 'pinned' : ''}" onclick="togglePinFromAudit(${q.id})">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>${st.pinned ? 'Đã ưu tiên' : 'Gắn sao ưu tiên'}</span>
+              </button>
+            </div>
+            <div class="audit-q">${q.q}</div>
+            <div class="audit-options">${optionsHtml}</div>
+            ${q.note ? `<div class="audit-explanation">${q.note}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function togglePinFromAudit(qId) {
+      const st = getStat(qId);
+      st.pinned = !st.pinned;
+      saveStats();
+      renderAuditList();
+    }
+
+    // Khởi tạo ứng dụng khi tải trang
+    window.addEventListener('DOMContentLoaded', () => {
+      loadStats();
+    });
   </script>
 </body>
 </html>
