@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn Tập Giữa Kì Lịch Sử 12</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --primary: #3b82f6;
+      --correct: #22c55e;
+      --wrong: #ef4444;
+      --border: #334155;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 20px 16px 60px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding-top: 12px;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .progress-wrap {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      color: var(--muted);
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #334155;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      border-radius: 99px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    .stats {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    .stat {
+      background: #0f172a;
+      padding: 6px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+
+    .stat strong {
+      color: var(--text);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 28px 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .card.correct-flash {
+      border-color: var(--correct);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    }
+
+    .card.wrong-flash {
+      border-color: var(--wrong);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+      animation: shake 0.45s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    .question-number {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 14px;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 22px;
+      line-height: 1.55;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option {
+      background: #0f172a;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.98rem;
+      text-align: left;
+    }
+
+    .option:hover:not(.disabled) {
+      border-color: #64748b;
+      background: #1e293b;
+    }
+
+    .option .letter {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #334155;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .option.correct {
+      border-color: var(--correct);
+      background: rgba(34, 197, 94, 0.12);
+    }
+
+    .option.correct .letter {
+      background: var(--correct);
+      color: white;
+    }
+
+    .option.wrong {
+      border-color: var(--wrong);
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .option.wrong .letter {
+      background: var(--wrong);
+      color: white;
+    }
+
+    .option.disabled {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .feedback {
+      margin-top: 20px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feedback.show {
+      display: flex;
+    }
+
+    .feedback.correct {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .feedback.wrong {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .start-screen, .finish-screen {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .start-screen h2, .finish-screen h2 {
+      font-size: 1.7rem;
+      margin-bottom: 12px;
+    }
+
+    .start-screen p, .finish-screen p {
+      color: var(--muted);
+      margin-bottom: 28px;
+      font-size: 1.05rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: #334155;
+      margin-top: 12px;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+      box-shadow: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .emoji {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .reset-msg {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      text-align: center;
+      display: none;
+    }
+
+    .reset-msg.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Ôn Tập Giữa Kì Lịch Sử 12</h1>
+      <p>Chiến tranh lạnh • Trật tự thế giới • Liên Hợp Quốc</p>
+    </header>
+
+    <!-- START SCREEN -->
+    <div id="startScreen" class="card start-screen">
+      <div class="emoji">📚</div>
+      <h2>Sẵn sàng ôn tập chưa?</h2>
+      <p>Làm đúng liên tục tất cả câu mới được qua.<br>
+      Sai một câu là <strong style="color:#f87171">reset về đầu</strong> luôn!</p>
+      <button class="btn" onclick="startQuiz()">Bắt đầu ôn ngay</button>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="quizScreen" class="hidden">
+      <div class="progress-wrap">
+        <div class="progress-info">
+          <span>Tiến độ</span>
+          <span id="progressText">0 / 0</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="stats">
+          <div class="stat">Lần làm lại: <strong id="retryCount">0</strong></div>
+          <div class="stat">Đã đúng liên tục: <strong id="streak">0</strong></div>
+        </div>
+      </div>
+
+      <div id="resetMsg" class="reset-msg">
+        ❌ Sai rồi! Quay về câu 1 và làm lại từ đầu nhé.
+      </div>
+
+      <div class="card" id="questionCard">
+        <div class="question-number" id="qNumber">Câu 1</div>
+        <div class="question-text" id="qText"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    </div>
+
+    <!-- FINISH SCREEN -->
+    <div id="finishScreen" class="card finish-screen hidden">
+      <div class="emoji">🎉</div>
+      <h2>Xuất sắc!</h2>
+      <p>Bạn đã làm đúng liên tục tất cả <strong id="totalQ">0</strong> câu.<br>
+      Số lần phải làm lại: <strong id="finalRetry">0</strong></p>
+      <button class="btn" onclick="startQuiz()">Ôn lại từ đầu</button>
+      <br>
+      <button class="btn btn-secondary" onclick="location.reload()">Về màn hình chính</button>
+    </div>
+
+    <footer>
+      Ôn tập hiệu quả = Nhớ lâu • Làm đến khi đúng hết
+    </footer>
+  </div>
+
+  <script>
+    // ===================== DỮ LIỆU CÂU HỎI =====================
+    const questions = [
+      {
+        q: "Sự kiện nào sau đây diễn ra trong thời kỳ Chiến tranh lạnh (1947-1989)?",
+        options: [
+          "Tổ chức Hiệp ước Vácsava được thành lập",
+          "Hệ thống Vécxai - Oasinhton được thiết lập",
+          "Chiến tranh thế giới thứ hai bùng nổ",
+          "Chiến tranh thế giới thứ nhất kết thúc"
+        ],
+        correct: 0
+      },
+      {
+        q: "Nhóm G20 ra đời năm 1999 với sự tham gia của 20 nước có nền kinh tế lớn là một trong những biểu hiện của",
+        options: [
+          "xu thế hợp tác kinh tế",
+          "xu thế toàn cầu hóa",
+          "xu thế đơn cực",
+          "xu thế đa cực"
+        ],
+        correct: 1
+      },
+      {
+        q: "Trong những cuộc gặp gỡ cấp cao năm 1972, Liên Xô và Mỹ đã ký kết văn kiện nào?",
+        options: [
+          "Công ước cấm vũ khí hóa học",
+          "Hiệp ước cấm phổ biến vũ khí hạt nhân",
+          "Hiệp ước hạn chế vũ khí chiến lược",
+          "Công ước cấm vũ khí hạt nhân"
+        ],
+        correct: 2
+      },
+      {
+        q: "Năm 1999, nhóm 20 nền kinh tế lớn nhất thế giới (G20) được thành lập, trở thành trung tâm điều phối các nỗ lực quốc tế nhằm mục đích",
+        options: [
+          "thúc đẩy sự phát triển kinh tế thế giới",
+          "chi phối các hoạt động kinh tế thế giới",
+          "tăng cường hợp tác an ninh, chính trị",
+          "thúc đẩy hòa bình và ổn định khu vực"
+        ],
+        correct: 0
+      },
+      {
+        q: "Mục tiêu “Duy trì hòa bình, an ninh thế giới” của tổ chức Liên Hợp Quốc là",
+        options: [
+          "mục tiêu mang tính sách lược",
+          "mục tiêu quan trọng hàng đầu",
+          "cơ sở để thực hiện mục tiêu khác",
+          "cơ sở để xóa bỏ xung đột, nội chiến"
+        ],
+        correct: 1
+      },
+      {
+        q: "Nhận xét nào sau đây là đúng về trật tự thế giới đa cực?",
+        options: [
+          "Có sự tham gia của các quốc gia và trung tâm quyền lực",
+          "Có sự phân cực rõ rệt giữa các nước theo chế độ chính trị - xã hội",
+          "Được kế thừa những hệ quả tích cực của trật tự thế giới hai cực",
+          "Một quốc gia có khả năng chi phối sự phát triển của thế giới"
+        ],
+        correct: 0
+      },
+      {
+        q: "Theo quyết định của Hội nghị Ianta (2/1945), Trung Quốc",
+        options: [
+          "thuộc phạm vi ảnh hưởng của Mỹ, Anh",
+          "trở thành quốc gia thống nhất và dân chủ",
+          "bị chia cắt làm hai miền theo vĩ tuyến 38",
+          "trở thành quốc gia lệ thuộc của Liên Xô"
+        ],
+        correct: 1
+      },
+      {
+        q: "Một trật tự thế giới mà ở đó các nước lớn, các trung tâm kinh tế - tài chính lớn có so sánh tương quan lực lượng cân bằng và vị thế quan trọng đối với quan hệ quốc tế được gọi là trật tự",
+        options: [
+          "đa phương hóa",
+          "tam cường, đa phương",
+          "đa cực, nhiều trung tâm",
+          "đơn cực, nhất siêu"
+        ],
+        correct: 2
+      },
+      {
+        q: "Trong xu thế đa cực, trung tâm quyền lực nào đã vươn lên mạnh mẽ để trở thành nền kinh tế lớn thứ hai thế giới (từ năm 2010)?",
+        options: [
+          "Trung Quốc",
+          "Nhật Bản",
+          "Liên bang Nga",
+          "Ấn Độ"
+        ],
+        correct: 0
+      },
+      {
+        q: "Nội dung nào sau đây phản ánh đúng điểm tương đồng giữa trật tự thế giới mới sau Chiến tranh lạnh so với trật tự hai cực Ianta?",
+        options: [
+          "Tồn tại hai hệ thống kinh tế - xã hội đối lập nhau",
+          "Các nước lớn giữ vai trò chi phối quan hệ quốc tế",
+          "Được hình thành khi chiến tranh thế giới kết thúc",
+          "Các nước tập trung phát triển kinh tế là trọng điểm"
+        ],
+        correct: 1
+      },
+      {
+        q: "Trong xu thế đa cực, cách mạng khoa học công nghệ và xu thế toàn cầu hóa làm cho các quốc gia phụ thuộc lẫn nhau chủ yếu về",
+        options: [
+          "kinh tế",
+          "quân sự",
+          "chính trị",
+          "văn hóa"
+        ],
+        correct: 0
+      },
+      {
+        q: "Theo quyết định của Hội nghị Ianta (tháng 2-1945), Mỹ không được phân chia phạm vi ảnh hưởng ở địa bàn nào sau đây?",
+        options: [
+          "Nhật Bản",
+          "Tây Âu",
+          "Tây Béc-lin",
+          "Bắc Triều Tiên"
+        ],
+        correct: 3
+      },
+      {
+        q: "Nội dung nào không phải nguyên tắc hoạt động của tổ chức Liên Hợp Quốc?",
+        options: [
+          "Từ bỏ đe dọa bằng vũ lực hoặc sử dụng vũ lực trong quan hệ quốc tế",
+          "Giải quyết các tranh chấp quốc tế bằng biện pháp hòa bình",
+          "Giúp đỡ quốc gia bị Liên Hợp Quốc áp dụng hành động cưỡng chế",
+          "Tôn trọng bình đẳng chủ quyền của tất cả các quốc gia thành viên"
+        ],
+        correct: 2
+      },
+      {
+        q: "Trong bối cảnh thế giới bị phân chia thành “hai cực”, “hai phe” (1945 – 1991), nguyên tắc hoạt động nào có ý nghĩa thực tiễn nhất của Liên Hợp Quốc?",
+        options: [
+          "Không can thiệp vào công việc nội bộ của Liên Xô, Mỹ, Anh",
+          "Bình đẳng chủ quyền và quyền tự quyết của Liên Xô, Mỹ, Anh",
+          "Giải quyết các tranh chấp quốc tế bằng biện pháp hòa bình",
+          "Giải thể các liên minh chính trị - quân sự lớn trên thế giới"
+        ],
+        correct: 2
+      },
+      {
+        q: "Sự kiện nào đã bước đầu tạo ra khuôn khổ của trật tự thế giới hai cực trong thế kỷ XX?",
+        options: [
+          "Thông điệp của Truman (3/1947)",
+          "Hội nghị Ianta (2/1945)",
+          "Hội nghị Vécxai (1919)",
+          "Hội nghị Potsdam (8/1945)"
+        ],
+        correct: 1
+      },
+      {
+        q: "Quyết định nào sau đây của Hội nghị Ianta (2-1945) đã buộc nhân dân Đông Nam Á phải tiếp tục nhiệm vụ đứng lên đấu tranh giành độc lập dân tộc?",
+        options: [
+          "Thống nhất tiêu diệt tận gốc phát xít Đức và quân phiệt Nhật",
+          "Đông Nam Á vẫn thuộc phạm vi ảnh hưởng của Liên Xô và Mỹ, Anh",
+          "Đông Nam Á vẫn thuộc phạm vi ảnh hưởng của các nước phương Tây",
+          "Lực lượng Đồng minh vào Đông Nam Á giải giáp quân Nhật"
+        ],
+        correct: 2
+      },
+      {
+        q: "Mục tiêu nào của Liên Hợp Quốc thúc đẩy các quốc gia thành viên xích lại gần nhau hơn?",
+        options: [
+          "Cấm đe dọa hoặc sử dụng vũ lực trong quan hệ quốc tế",
+          "Giải quyết các tranh chấp bằng con đường hòa bình",
+          "Tôn trọng các nghĩa vụ quốc tế và luật pháp quốc tế",
+          "Phát triển mối quan hệ hữu nghị giữa các dân tộc"
+        ],
+        correct: 3
+      },
+      {
+        q: "Sự sụp đổ của Trật tự thế giới hai cực Ianta có tác động chủ yếu nào sau đây?",
+        options: [
+          "Thúc đẩy sự phát triển của kinh tế thế giới gắn liền với xu thế toàn cầu hóa",
+          "Tạo điều kiện cho các cường quốc mới nổi có vai trò lớn trong quan hệ quốc tế",
+          "Mở rộng hơn nữa phạm vi ảnh hưởng và kiểm soát của Mỹ trên thế giới",
+          "Chấm dứt được những cuộc xung đột căng thẳng và kéo dài ở khu vực Trung Đông"
+        ],
+        correct: 0
+      },
+      {
+        q: "Sự ra đời của tổ chức Liên Hợp Quốc gắn với vai trò chủ yếu của những quốc gia nào sau đây?",
+        options: [
+          "Đức, Ý, Nhật",
+          "Nhật Bản, Liên Xô, Trung Quốc",
+          "Trung Quốc, Mỹ, Anh",
+          "Mỹ, Anh, Liên Xô"
+        ],
+        correct: 3
+      },
+      {
+        q: "Nội dung nào sau đây không phản ánh đúng đóng góp của Liên Hợp Quốc?",
+        options: [
+          "Góp phần xóa bỏ chế độ phân biệt chủng tộc ở châu Phi",
+          "Thúc đẩy hợp tác quốc tế về thương mại, tài chính và đầu tư",
+          "Thúc đẩy mối quan hệ hữu nghị và hợp tác giữa các dân tộc",
+          "Chấm dứt hoàn toàn các cuộc xung đột quân sự trên thế giới"
+        ],
+        correct: 3
+      },
+      {
+        q: "Một trong những điểm chung của các trật tự thế giới được hình thành trong và sau CTL là đều",
+        options: [
+          "dựa trên sự thỏa thuận giữa các nước có cùng chế độ chính trị",
+          "bảo đảm quyền dân tộc cơ bản của các nước trên thế giới",
+          "thiết lập trên cơ sở thực lực của các nước trên thế giới",
+          "phản ánh tương quan lực lượng giữa hai hệ thống chính trị đối lập"
+        ],
+        correct: 2
+      },
+      {
+        q: "Văn bản quốc tế nào sau đây không được tổ chức Liên Hợp Quốc xây dựng?",
+        options: [
+          "Công ước cấm vũ khí hạt nhân (2017)",
+          "Hiệp định hạn chế vũ khí tiến công chiến lược (1972)",
+          "Hiệp ước cấm phổ biến vũ khí hạt nhân (1968)",
+          "Công ước cấm vũ khí hóa học (1992)"
+        ],
+        correct: 1
+      },
+      {
+        q: "Một trong những biểu hiện của xu thế toàn cầu hóa từ những năm 80 của thế kỷ XX là",
+        options: [
+          "sự phát triển mạnh mẽ của xu thế khu vực hóa",
+          "thị trường thế giới được hoàn toàn thống nhất",
+          "sự thành công của cách mạng công nghệ 4.0",
+          "sự phát triển quan hệ thương mại quốc tế"
+        ],
+        correct: 3
+      },
+      {
+        q: "Từ đầu những năm 70 của thế kỉ XX, quan hệ Mỹ - Liên Xô chuyển dần sang hòa dịu, sau đó kết thúc Chiến tranh lạnh (1989) là do",
+        options: [
+          "xu thế liên kết khu vực và toàn cầu hóa diễn ra mạnh mẽ",
+          "trật tự nhất siêu, nhiều cường đang trong quá trình mở rộng",
+          "chịu nhiều tổn kém và bị suy giảm thế mạnh về nhiều mặt",
+          "quá trình mở rộng không ngừng của Liên minh châu Âu (EU)"
+        ],
+        correct: 2
+      },
+      {
+        q: "Nội dung nào không phải là biểu hiện của xu thế đa cực?",
+        options: [
+          "Hoạt động của các công ty xuyên quốc gia có ảnh hưởng ngày càng lớn",
+          "Các quốc gia vừa cạnh tranh vừa hợp tác nhằm tái thiết trật tự thế giới cũ",
+          "Vai trò của các trung tâm, tổ chức kinh tế quốc tế và khu vực ngày càng lớn",
+          "Sự suy giảm sức mạnh tương đối của Mỹ so với các cường quốc khác"
+        ],
+        correct: 1
+      },
+      {
+        q: "Nội dung nào sau đây phản ánh điểm khác biệt giữa trật tự thế giới mới sau Chiến tranh lạnh so với trật tự hai cực Ianta?",
+        options: [
+          "Bị chi phối bởi quyền lợi của các cường quốc",
+          "Các nước chỉ tập trung vào chạy đua vũ trang",
+          "Hình thành sau khi chiến tranh thế giới kết thúc",
+          "Hòa bình, đối thoại, hợp tác là xu thế chủ đạo"
+        ],
+        correct: 3
+      },
+      {
+        q: "Một trong những biểu hiện của xu thế đa cực đầu thế kỉ XXI là",
+        options: [
+          "vai trò ngày càng tăng của các trung tâm quyền lực",
+          "thị trường thế giới đã được hoàn toàn nhất thể hóa",
+          "các liên minh kinh tế khu vực bước đầu thành lập",
+          "Mỹ khống chế và chi phối tất cả tình hình thế giới"
+        ],
+        correct: 0
+      },
+      {
+        q: "Tổ chức Liên Hợp Quốc thúc đẩy mạnh mẽ sự phát triển của các nước thành viên trên nhiều lĩnh vực, ngoại trừ lĩnh vực nào?",
+        options: [
+          "Kinh tế",
+          "Tài chính",
+          "Quân sự",
+          "Văn hóa"
+        ],
+        correct: 2
+      },
+      {
+        q: "Sau Chiến tranh lạnh kết thúc, sự vươn lên mạnh mẽ của các cường quốc mới nổi đã dẫn đến hệ quả nào sau đây?",
+        options: [
+          "Đã làm suy giảm sức mạnh tương đối của Mỹ",
+          "Buộc Mỹ từ bỏ cấm vận kinh tế mọi quốc gia",
+          "Chấm dứt sự cạnh tranh kinh tế các quốc gia",
+          "Khiến cuộc chiến tranh thế giới mới bùng nổ"
+        ],
+        correct: 0
+      },
+      {
+        q: "Trật tự hai cực Ianta sụp đổ năm 1991 đã",
+        options: [
+          "chấm dứt hoàn toàn các cuộc xung đột ở khu vực",
+          "tạo cho Mỹ ưu thế tuyệt đối trong trật tự đơn cực",
+          "làm gia tăng vai trò của một số cường quốc mới nổi",
+          "đưa Mỹ trở thành cường quốc duy nhất trên thế giới"
+        ],
+        correct: 2
+      },
+      {
+        q: "Một trong những vai trò của Liên Hợp Quốc về bảo đảm quyền con người, phát triển văn hóa xã hội là",
+        options: [
+          "ra công ước về chống chạy đua vũ trang",
+          "thúc đẩy quá trình phi thực dân hóa trên thế giới",
+          "làm trung gian hòa giải các cuộc xung đột",
+          "tạo cơ hội phát triển cho tất cả mọi người"
+        ],
+        correct: 3
+      },
+      {
+        q: "Nhận xét nào sau đây là đúng về đặc điểm nổi bật của quan hệ quốc tế từ đầu những năm 70 của thế kỷ XX đến năm 1991?",
+        options: [
+          "Đối thoại hòa bình là xu thế chủ đạo",
+          "Đối đầu và chiến tranh gay gắt",
+          "Liên minh giữa Mỹ và Liên Xô ra đời",
+          "Vừa đối đầu vừa đối thoại, hợp tác"
+        ],
+        correct: 3
+      },
+      {
+        q: "Sự hình thành xu thế đa cực, nhiều trung tâm sau Chiến tranh lạnh có tác động nào sau đây đối với tình hình thế giới và quan hệ quốc tế?",
+        options: [
+          "Ngăn chặn được mọi cuộc chiến tranh, xung đột",
+          "Góp phần hạn chế tầm ảnh hưởng của Nhật Bản",
+          "Góp phần củng cố hòa bình và an ninh quốc tế",
+          "Mở ra quá trình hình thành của xu thế toàn cầu hóa"
+        ],
+        correct: 2
+      },
+      {
+        q: "Từ ngày 25-4-1945 đến ngày 26-6-1945, Hội nghị quốc tế họp tại San Francisco (Mỹ) với sự tham gia của đại biểu 50 nước đã thông qua văn kiện nào sau đây?",
+        options: [
+          "Tuyên bố Băng Cốc",
+          "Hiệp ước hòa bình San Francisco",
+          "Tuyên ngôn Quốc tế Nhân quyền",
+          "Hiến chương Liên Hợp Quốc"
+        ],
+        correct: 3
+      },
+      {
+        q: "Nội dung nào dưới đây là một trong những mục đích thành lập Liên Hợp Quốc?",
+        options: [
+          "Phát triển mối quan hệ giữa các dân tộc",
+          "Mở rộng các cuộc chiến tranh cục bộ",
+          "Giải thể các tổ chức phi chính phủ",
+          "Kết thúc mọi tranh chấp trên thế giới"
+        ],
+        correct: 0
+      },
+      {
+        q: "Những quyết định của Hội nghị Ianta (2/1945) về sự phân chia phạm vi ảnh hưởng của các cường quốc ở châu Âu và châu Á đã",
+        options: [
+          "thay đổi cục diện Chiến tranh thế giới thứ hai",
+          "làm mâu thuẫn về thuộc địa trở nên gay gắt",
+          "tạo lợi thế cho phong trào giải phóng dân tộc",
+          "vi phạm chủ quyền của các quốc gia dân tộc"
+        ],
+        correct: 3
+      },
+      {
+        q: "Nguyên thủ của quốc gia nào sau đây không tham dự Hội nghị Ianta (2-1945)?",
+        options: [
+          "Hà Lan",
+          "Anh",
+          "Liên Xô",
+          "Mỹ"
+        ],
+        correct: 0
+      },
+      {
+        q: "Một trong những văn kiện quan trọng được Liên Hợp Quốc ban hành nhằm duy trì hòa bình và an ninh thế giới là",
+        options: [
+          "Hiệp ước cấm phổ biến vũ khí hạt nhân",
+          "Công ước Liên Hợp Quốc về quyền trẻ em",
+          "Tuyên ngôn Quốc tế Nhân quyền",
+          "Chương trình nghị sự 2030"
+        ],
+        correct: 0
+      },
+      {
+        q: "Trải qua hơn 70 năm hoạt động, LHQ đã có nhiều vai trò, đóng góp trên các lĩnh vực, ngoại trừ việc",
+        options: [
+          "ngăn chặn được các cuộc đối đầu Đông-Tây diễn ra trên thế giới",
+          "làm trung gian hòa giải xung đột và chiến tranh ở các khu vực",
+          "thúc đẩy quá trình phi thực dân hóa ở nhiều nơi trên thế giới",
+          "ra các văn kiện nhằm thúc đẩy môi trường hòa bình và hợp tác"
+        ],
+        correct: 0
+      },
+      {
+        q: "Vai trò duy trì hòa bình, an ninh quốc tế của LHQ được thể hiện qua hoạt động nào sau đây?",
+        options: [
+          "Góp phần chấm dứt nhiều cuộc xung đột trên thế giới",
+          "Xây dựng chương trình hỗ trợ các nước về vốn, tri thức, kĩ thuật,...",
+          "Đề ra mục tiêu phát triển Thiên niên kỉ nhằm xóa bỏ đói nghèo",
+          "Kí điều ước quốc tế về quyền phụ nữ và trẻ em"
+        ],
+        correct: 0
+      },
+      {
+        q: "Nội dung nào là đặc điểm của quan hệ quốc tế từ đầu những năm 70 của thế kỷ XX đến năm 1991?",
+        options: [
+          "Trật tự thế giới hai cực Ianta suy yếu và đi đến sụp đổ",
+          "Hình thành một trật tự thế giới mới với xu thế đa cực",
+          "Hệ thống xã hội chủ nghĩa được hình thành và mở rộng",
+          "Chính thức xác lập cục diện hai cực hai phe trên thế giới"
+        ],
+        correct: 0
+      },
+      {
+        q: "Việc Hiến chương Liên Hợp Quốc được thông qua và có hiệu lực năm 1945 có ý nghĩa nào?",
+        options: [
+          "Đặt nền tảng pháp lý cho nền hòa bình và an ninh quốc tế hậu chiến",
+          "Bảo đảm quyền lực tuyệt đối của các quốc gia Đồng minh thắng trận",
+          "Mở đường cho việc chia sẻ ảnh hưởng giữa các cường quốc thế giới",
+          "Tạo điều kiện để mở rộng liên minh quân sự giữa những cường quốc"
+        ],
+        correct: 0
+      },
+      {
+        q: "Nội dung nào sau đây thể hiện tác động của xu thế đa cực đối với quan hệ quốc tế?",
+        options: [
+          "Tạo điều kiện cho các nước lớn mới nổi có vị thế ngày càng cao trên trường quốc tế",
+          "Mỹ ngày càng mở rộng phạm vi ảnh hưởng và chi phối mạnh mẽ quan hệ quốc tế",
+          "Mỹ, Trung Quốc quyết định và chi phối sự phát triển của các quốc gia trên thế giới",
+          "Chấm dứt hoàn toàn những cuộc xung đột sắc tộc trên thế giới"
+        ],
+        correct: 0
+      },
+      {
+        q: "Nhận định nào sau đây là không đúng về Hội nghị Ianta (tháng 2/1945)?",
+        options: [
+          "Có ảnh hưởng lớn đến vấn đề hòa bình thời kì hậu chiến",
+          "Phản ánh tham vọng, thực lực giữa các nước lớn với nhau",
+          "Vi phạm nghiêm trọng quyền tự quyết của một số nước",
+          "Hội nghị diễn ra trong một thời gian dài, đầy căng thẳng"
+        ],
+        correct: 3
+      },
+      {
+        q: "Nhận xét nào sau đây đúng về sự ra đời của tổ chức Liên Hợp Quốc?",
+        options: [
+          "Quá trình hình thành kéo dài với nhiều hội nghị quan trọng",
+          "Được chính thức thành lập ngay trong Chiến tranh thế giới thứ hai",
+          "Nhanh chóng hoàn thiện về mặt tổ chức, gắn với vai trò của Mỹ",
+          "Có sự tham gia chuẩn bị của các nước mới giành độc lập"
+        ],
+        correct: 0
+      },
+      {
+        q: "Để tiêu diệt chủ nghĩa quân phiệt Nhật Bản và nhanh chóng kết thúc chiến tranh, Hội nghị Ianta (tháng 2-1945) đã quyết định",
+        options: [
+          "thành lập phe Đồng minh chống phát xít trên thế giới",
+          "Anh, Pháp, Mỹ sẽ tham gia chiến tranh chống Nhật ở châu Âu",
+          "Liên Xô sẽ tham gia chiến tranh chống Nhật ở châu Á",
+          "Anh và Liên Xô sẽ tiêu diệt lực lượng quân Nhật tại Trung Quốc"
+        ],
+        correct: 2
+      },
+      {
+        q: "Nội dung nào không phản ánh đúng về trật tự hai cực Ianta?",
+        options: [
+          "Được hoàn chỉnh ngay trong Hội nghị Ianta",
+          "Phản ánh sự đối đầu căng thẳng giữa Mỹ và Liên Xô",
+          "Được đặt dưới sự chi phối của các cường quốc",
+          "Nhân tố hàng đầu chi phối nền chính trị thế giới"
+        ],
+        correct: 0
+      },
+      {
+        q: "Trong xu thế đa cực, để vươn lên khẳng định vị thế của mình, các quốc gia lựa chọn phương thức đối ngoại chủ yếu nào?",
+        options: [
+          "Vừa tiếp xúc vừa giao thoa",
+          "Vừa xung đột vừa hòa bình",
+          "Vừa cạnh tranh vừa hợp tác",
+          "Vừa đối đầu vừa hòa hoãn"
+        ],
+        correct: 2
+      },
+      {
+        q: "Nhận xét nào sau đây phản ánh không đúng về quá trình hình thành của Liên Hợp Quốc?",
+        options: [
+          "Quá trình ra đời phức tạp, trải qua nhiều hội nghị quốc tế khác nhau",
+          "Quá trình thành lập lâu dài, phức tạp do tác động xu thế toàn cầu hóa",
+          "Phù hợp với khát vọng duy trì hòa bình của nhân loại tiến bộ thế giới",
+          "Các cường quốc Đồng minh giữ vai trò chủ đạo trong việc thành lập"
+        ],
+        correct: 1
+      },
+      {
+        q: "Nội dung nào sau đây là một trong những nhân tố tác động đến sự hình thành trật tự thế giới mới sau khi Chiến tranh lạnh kết thúc?",
+        options: [
+          "Sự trỗi dậy của chủ nghĩa khủng bố trên phạm vi toàn cầu",
+          "Cuộc đấu tranh giành độc lập của các dân tộc thuộc địa",
+          "Cuộc đấu tranh chống chế độ phân biệt chủng tộc ở châu Phi",
+          "Cuộc chạy đua về sức mạnh tổng hợp giữa các cường quốc"
+        ],
+        correct: 3
+      },
+      {
+        q: "Năm 1948, văn kiện nào sau đây đã được Đại hội đồng Liên Hợp Quốc thông qua, khẳng định những quyền cơ bản của con người?",
+        options: [
+          "Tuyên ngôn Nhân quyền",
+          "Công ước quốc tế về kinh tế",
+          "Hiến chương Liên hợp quốc",
+          "Hiệp ước cấm vũ khí hạt nhân"
+        ],
+        correct: 0
+      },
+      {
+        q: "LHQ được thành lập năm 1945 nhằm đáp ứng chủ yếu nhu cầu nào sau đây của toàn thể nhân loại?",
+        options: [
+          "Bảo vệ nền hòa bình và an ninh toàn thế giới",
+          "Thúc đẩy khoa học công nghệ phát triển",
+          "Chú trọng phát triển các loại vũ khí hủy diệt",
+          "Chống biến đổi khí hậu trên toàn cầu"
+        ],
+        correct: 0
+      },
+      {
+        q: "Hội nghị nào sau đây không có tác động đến sự ra đời của Liên Hợp Quốc?",
+        options: [
+          "Hội nghị Véc-xai (1921)",
+          "Hội nghị San Francisco (1945)",
+          "Hội nghị Ianta (1945)",
+          "Hội nghị Teheran (1943)"
+        ],
+        correct: 0
+      },
+      {
+        q: "Tổ chức Hiệp ước Bắc Đại Tây Dương (1949) và tổ chức Hiệp ước Vácsava (1955) là một trong những biểu hiện về sự đối đầu của hai cực trong trật tự thế giới Ianta trên lĩnh vực chủ yếu nào?",
+        options: [
+          "Kinh tế",
+          "Văn hóa",
+          "Chính trị",
+          "Quân sự"
+        ],
+        correct: 3
+      },
+      {
+        q: "Trong những thập niên đầu của thế kỉ XXI, nhân tố nào sau đây sẽ còn tiếp tục tạo ra những “đột phá” và biến chuyển trong cục diện thế giới?",
+        options: [
+          "Sự vươn lên mạnh mẽ của Nhật Bản và Tây Âu",
+          "Mỹ khống chế, chi phối Trung Quốc và Anh",
+          "Sự phát triển của cách mạng khoa học - kĩ thuật",
+          "Cuộc chạy đua vũ trang giữa Mỹ và Liên Xô"
+        ],
+        correct: 2
+      },
+      {
+        q: "Quá trình hình thành và tồn tại của Trật tự hai cực Ianta (1945 – 1991) có đặc điểm nào sau đây?",
+        options: [
+          "Là hệ quả trực tiếp của cách mạng khoa học công nghiệp",
+          "Chỉ thể hiện sự phá hoại, phản động của phe Đồng minh",
+          "Chịu sự tác động, chi phối mạnh mẽ của Liên hợp quốc",
+          "Có sự thỏa hiệp giữa các cường quốc vì lợi ích quốc gia"
+        ],
+        correct: 3
+      },
+      {
+        q: "Trong trật tự thế giới đa cực, sự gia tăng vai trò của các trung tâm, các tổ chức quốc tế phản ánh điều gì?",
+        options: [
+          "Nền kinh tế thế giới đã đạt được công bằng mới",
+          "Trình độ phát triển của các nước không còn chênh lệch",
+          "Quy luật phát triển đồng đều của lịch sử thế giới",
+          "So sánh lực lượng mới trong quan hệ quốc tế"
+        ],
+        correct: 3
+      },
+      {
+        q: "Sau Chiến tranh lạnh, nội dung chủ yếu trong cuộc cạnh tranh giữa các cường quốc là",
+        options: [
+          "tăng cường chạy đua quân sự và đối đầu bằng vũ khí hạt nhân",
+          "mở rộng sự ảnh hưởng tư tưởng xã hội chủ nghĩa ra toàn cầu",
+          "thiết lập lại hệ thống thuộc địa kiểu cũ ở châu Á và châu Phi",
+          "xây dựng sức mạnh quốc gia tổng hợp, đặc biệt là về kinh tế"
+        ],
+        correct: 3
+      },
+      {
+        q: "Sự kết thúc trật tự thế giới hai cực Ianta có tác động nào sau đây đến quan hệ quốc tế?",
+        options: [
+          "Duy trì thế đối đầu căng thẳng giữa hai phe, hai cực",
+          "Thúc đẩy xu thế đối thoại, hợp tác cùng phát triển",
+          "Làm bùng nổ các cuộc xung đột giữa các quốc gia",
+          "Tái lập hệ thống đồng minh quân sự trên toàn cầu"
+        ],
+        correct: 1
+      },
+      {
+        q: "Đặc điểm nổi bật của quan hệ quốc tế từ sau Chiến tranh thế giới thứ hai đến đầu những năm 70 của thế kỷ XX là gì?",
+        options: [
+          "Hòa bình, hợp tác trở thành xu thế chủ đạo",
+          "Hai siêu cường Xô - Mỹ đối thoại, hợp tác",
+          "Hai siêu cường Xô - Mỹ đối đầu gay gắt",
+          "Xu thế toàn cầu hóa diễn ra mạnh mẽ"
+        ],
+        correct: 2
+      },
+      {
+        q: "Theo quyết định của Hội nghị Ianta (2-1945), khu vực nào sau đây không thuộc phạm vi ảnh hưởng của Liên Xô?",
+        options: [
+          "Đông Nam Á",
+          "Đông Béc-lin",
+          "Đông Âu",
+          "Đông Đức"
+        ],
+        correct: 0
+      }
+    ];
+
+    // ===================== LOGIC =====================
+    let currentIndex = 0;
+    let retryCount = 0;
+    let isAnswering = false;
+
+    const startScreen = document.getElementById('startScreen');
+    const quizScreen = document.getElementById('quizScreen');
+    const finishScreen = document.getElementById('finishScreen');
+    const questionCard = document.getElementById('questionCard');
+    const qNumber = document.getElementById('qNumber');
+    const qText = document.getElementById('qText');
+    const optionsEl = document.getElementById('options');
+    const feedback = document.getElementById('feedback');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const retryCountEl = document.getElementById('retryCount');
+    const streakEl = document.getElementById('streak');
+    const resetMsg = document.getElementById('resetMsg');
+
+    function startQuiz() {
+      currentIndex = 0;
+      retryCount = 0;
+      isAnswering = false;
+      startScreen.classList.add('hidden');
+      finishScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      resetMsg.classList.remove('show');
+      updateProgress();
+      showQuestion();
+    }
+
+    function updateProgress() {
+      const total = questions.length;
+      const percent = (currentIndex / total) * 100;
+      progressFill.style.width = percent + '%';
+      progressText.textContent = `${currentIndex} / ${total}`;
+      retryCountEl.textContent = retryCount;
+      streakEl.textContent = currentIndex;
+    }
+
+    function showQuestion() {
+      isAnswering = false;
+      const q = questions[currentIndex];
+      qNumber.textContent = `Câu ${currentIndex + 1}`;
+      qText.textContent = q.q;
+      feedback.className = 'feedback';
+      feedback.textContent = '';
+      questionCard.classList.remove('correct-flash', 'wrong-flash');
+
+      optionsEl.innerHTML = '';
+      q.options.forEach((opt, i) => {
+        const div = document.createElement('div');
+        div.className = 'option';
+        div.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span>${opt}</span>`;
+        div.onclick = () => selectOption(i);
+        optionsEl.appendChild(div);
+      });
+    }
+
+    function selectOption(selected) {
+      if (isAnswering) return;
+      isAnswering = true;
+
+      const q = questions[currentIndex];
+      const optionEls = optionsEl.querySelectorAll('.option');
+
+      optionEls.forEach(el => el.classList.add('disabled'));
+
+      if (selected === q.correct) {
+        // ĐÚNG
+        optionEls[selected].classList.add('correct');
+        questionCard.classList.add('correct-flash');
+        feedback.className = 'feedback show correct';
+        feedback.innerHTML = '✅ Chính xác! Tiếp tục nào...';
+
+        setTimeout(() => {
+          currentIndex++;
+          if (currentIndex >= questions.length) {
+            // Hoàn thành
+            document.getElementById('totalQ').textContent = questions.length;
+            document.getElementById('finalRetry').textContent = retryCount;
+            quizScreen.classList.add('hidden');
+            finishScreen.classList.remove('hidden');
+          } else {
+            updateProgress();
+            showQuestion();
+          }
+        }, 900);
+      } else {
+        // SAI → RESET
+        optionEls[selected].classList.add('wrong');
+        optionEls[q.correct].classList.add('correct');
+        questionCard.classList.add('wrong-flash');
+        feedback.className = 'feedback show wrong';
+        feedback.innerHTML = '❌ Sai rồi! Đáp án đúng là <strong>' + String.fromCharCode(65 + q.correct) + '</strong>';
+
+        retryCount++;
+        updateProgress();
+
+        setTimeout(() => {
+          resetMsg.classList.add('show');
+          currentIndex = 0;
+          setTimeout(() => {
+            resetMsg.classList.remove('show');
+            updateProgress();
+            showQuestion();
+          }, 1600);
+        }, 1400);
+      }
+    }
+  </script>
+</body>
+</html>
