@@ -1012,6 +1012,8 @@
     let currentIndex = 0;
     let retryCount = 0;
     let isAnswering = false;
+    let currentShuffled = [];   // lưu thứ tự đã xáo của câu hiện tại
+    let currentCorrectIndex = 0; // vị trí đáp án đúng sau khi xáo
 
     const startScreen = document.getElementById('startScreen');
     const quizScreen = document.getElementById('quizScreen');
@@ -1026,6 +1028,16 @@
     const retryCountEl = document.getElementById('retryCount');
     const streakEl = document.getElementById('streak');
     const resetMsg = document.getElementById('resetMsg');
+
+    // Hàm xáo trộn mảng (Fisher-Yates)
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
 
     function startQuiz() {
       currentIndex = 0;
@@ -1057,11 +1069,16 @@
       feedback.textContent = '';
       questionCard.classList.remove('correct-flash', 'wrong-flash');
 
+      // Xáo trộn đáp án mỗi lần hiện câu hỏi
+      const originalOptions = q.options.map((text, idx) => ({ text, originalIndex: idx }));
+      currentShuffled = shuffleArray(originalOptions);
+      currentCorrectIndex = currentShuffled.findIndex(item => item.originalIndex === q.correct);
+
       optionsEl.innerHTML = '';
-      q.options.forEach((opt, i) => {
+      currentShuffled.forEach((item, i) => {
         const div = document.createElement('div');
         div.className = 'option';
-        div.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span>${opt}</span>`;
+        div.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span>${item.text}</span>`;
         div.onclick = () => selectOption(i);
         optionsEl.appendChild(div);
       });
@@ -1071,12 +1088,10 @@
       if (isAnswering) return;
       isAnswering = true;
 
-      const q = questions[currentIndex];
       const optionEls = optionsEl.querySelectorAll('.option');
-
       optionEls.forEach(el => el.classList.add('disabled'));
 
-      if (selected === q.correct) {
+      if (selected === currentCorrectIndex) {
         // ĐÚNG
         optionEls[selected].classList.add('correct');
         questionCard.classList.add('correct-flash');
@@ -1099,10 +1114,10 @@
       } else {
         // SAI → RESET
         optionEls[selected].classList.add('wrong');
-        optionEls[q.correct].classList.add('correct');
+        optionEls[currentCorrectIndex].classList.add('correct');
         questionCard.classList.add('wrong-flash');
         feedback.className = 'feedback show wrong';
-        feedback.innerHTML = '❌ Sai rồi! Đáp án đúng là <strong>' + String.fromCharCode(65 + q.correct) + '</strong>';
+        feedback.innerHTML = '❌ Sai rồi! Đáp án đúng là <strong>' + String.fromCharCode(65 + currentCorrectIndex) + '</strong>';
 
         retryCount++;
         updateProgress();
